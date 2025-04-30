@@ -1,0 +1,11 @@
+.sent {
+    text-align: right;
+}
+
+.received {
+    text-align: left;
+}
+
+.userchat-display {
+    max-width: 50%;
+}

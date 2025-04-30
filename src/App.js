@@ -1,24 +1,60 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import DataProvider from './context/DataProvider';
+
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+  }
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+  }
+
+  // const handleSignup = () => {
+  //   setIsAuthenticated(false);
+  // }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <DataProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* this will load first in the app */}
+          <Route path="/login" element={<Login onLogin={handleLogin}/>} />
+
+          {/* Protected pages. User should be authenticated first before they can access this page */}
+          <Route path="/dashboard" element={
+            isAuthenticated ? (
+              <Dashboard onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }  
+          />
+
+          {/* <Route
+            path="/message"
+            element={
+              isAuthenticated ? (
+                <Message />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          /> */}
+
+
+          {/* Navigate - forces the browser to attach this path to the URL */}
+          <Route path="*" element={<Navigate to="/login" />} />
+        </Routes>
+      </BrowserRouter>
+    </DataProvider>
   );
 }
 

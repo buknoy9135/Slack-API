@@ -1,0 +1,123 @@
+import { useState, useEffect } from "react";
+import { useData } from "../context/DataProvider";
+import axios from "axios";
+import { API_URL } from "../constants/Constants";
+import '../css/UserChatDisplay.css'
+
+function UserChatDisplay(props) {
+  const { selectedUser, message, setMessage } = props;
+  const { userHeaders } = useData();
+  const [chatUserMessages, setChatUserMessages] = useState([]);
+
+  //Fetch messages function
+  useEffect(() => {
+    if (!selectedUser) return;
+
+    const fetchMessages = async () => {
+      try {
+        const requestHeaders = {
+          headers: userHeaders,
+        };
+
+        const response = await axios.get(
+          `${API_URL}/messages?receiver_id=${selectedUser.id}&receiver_class=User`,
+          requestHeaders
+        );
+
+        if (response.status === 200) {
+          setChatUserMessages(response.data.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch messages:", error);
+        alert("Could not load messages.");
+      }
+    };
+
+    fetchMessages();
+    //useEffect runs when selectedUser or userHeaders changes
+
+    const intervalId = setInterval(fetchMessages, 5000); //fetch every 5 seconds
+
+    return () => clearInterval(intervalId); //cleanup on unmount or user change
+  }, [selectedUser, userHeaders]);
+
+  //function to send message
+  const handleMessage = async () => {
+    if (!message.trim()) {
+      alert("Please type a message before sending.");
+      return;
+    }
+
+    try {
+      const requestBody = {
+        receiver_id: Number(selectedUser.id),
+        receiver_class: "User",
+        body: message,
+      };
+
+      const requestHeaders = {
+        headers: userHeaders,
+      };
+
+      const response = await axios.post(
+        `${API_URL}/messages`,
+        requestBody,
+        requestHeaders
+      );
+
+      if (response.status === 200) {
+        alert(`Message sent to ${selectedUser.email.split("@")[0]}!`);
+        setMessage(""); //clear after successful send
+      } else {
+        alert("Failed to send message. Try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("An error occurred while sending the message.");
+    }
+  };
+
+  return (
+    <div className="UserChatDisplay-container">
+      <div className="userchat-display">
+        <div className="userchat-display">
+          {chatUserMessages.length > 0 ? (
+            chatUserMessages.map((msg, index) => (
+              <div
+                key={index}
+                className={`chat-message ${
+                  msg.sender?.email === userHeaders.uid ? "sent" : "received"
+                }`}
+              >
+                {msg.sender?.email.split("@")[0] || "User"}: {msg.body}
+              </div>
+            ))
+          ) : (
+            <p>No messages yet</p>
+          )}
+        </div>
+      </div>
+      <div className="userchat-input">
+        {selectedUser ? (
+          <div className="message-input">
+            <textarea
+              rows="4"
+              cols="50"
+              name="comment"
+              type="text"
+              placeholder={`sending message to ${
+                selectedUser.email.split("@")[0]
+              } (${selectedUser.id})`}
+              value={message}
+              onChange={(event) => setMessage(event.target.value)}
+            />
+            <button onClick={handleMessage}>Send Message</button>
+          </div>
+        ) : (
+          <p>Select a user to message</p>
+        )}
+      </div>
+    </div>
+  );
+}
+export default UserChatDisplay;
