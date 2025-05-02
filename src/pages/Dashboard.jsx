@@ -50,7 +50,7 @@ function Dashboard(props) {
       <ChannelList />
       <CreateChannel userList={userList} />
 
-      <ChannelChatDisplay userList={userList} />
+      {/* <ChannelChatDisplay userList={userList} /> */}
     </div>
   );
 }
