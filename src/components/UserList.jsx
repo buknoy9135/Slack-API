@@ -43,7 +43,7 @@ function UserList(props) {
     return <div>No users available...</div>;
   }
   return (
-    <>
+    <div className="GetAllUsers-container">
       {userList
         .filter((invidual) => invidual.id >= 194) // filter to display only IDs 194 and up
         .sort((a, b) => {
@@ -73,7 +73,7 @@ function UserList(props) {
             </div>
           );
         })}
-    </>
+    </div>
   );
 }
 

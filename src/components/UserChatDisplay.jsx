@@ -9,11 +9,11 @@ function UserChatDisplay(props) {
   const { userHeaders } = useData();
   const [chatUserMessages, setChatUserMessages] = useState([]);
 
-  //Fetch messages function
+  //Fetch user messages function
   useEffect(() => {
     if (!selectedUser) return;
 
-    const fetchMessages = async () => {
+    const fetchUserMessages = async () => {
       try {
         const requestHeaders = {
           headers: userHeaders,
@@ -33,10 +33,10 @@ function UserChatDisplay(props) {
       }
     };
 
-    fetchMessages();
+    fetchUserMessages();
     //useEffect runs when selectedUser or userHeaders changes
 
-    const intervalId = setInterval(fetchMessages, 5000); //fetch every 5 seconds
+    const intervalId = setInterval(fetchUserMessages, 5000); //fetch every 5 seconds
 
     return () => clearInterval(intervalId); //cleanup on unmount or user change
   }, [selectedUser, userHeaders]);
