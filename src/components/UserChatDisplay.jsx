@@ -5,7 +5,7 @@ import { API_URL } from "../constants/Constants";
 import '../css/UserChatDisplay.css'
 
 function UserChatDisplay(props) {
-  const { selectedUser, message, setMessage } = props;
+  const { selectedUser, messageUser, setMessageUser } = props;
   const { userHeaders } = useData();
   const [chatUserMessages, setChatUserMessages] = useState([]);
 
@@ -43,7 +43,7 @@ function UserChatDisplay(props) {
 
   //function to send message
   const handleMessage = async () => {
-    if (!message.trim()) {
+    if (!messageUser.trim()) {
       alert("Please type a message before sending.");
       return;
     }
@@ -52,7 +52,7 @@ function UserChatDisplay(props) {
       const requestBody = {
         receiver_id: Number(selectedUser.id),
         receiver_class: "User",
-        body: message,
+        body: messageUser,
       };
 
       const requestHeaders = {
@@ -67,7 +67,7 @@ function UserChatDisplay(props) {
 
       if (response.status === 200) {
         alert(`Message sent to ${selectedUser.email.split("@")[0]}!`);
-        setMessage(""); //clear after successful send
+        setMessageUser(""); //clear after successful send
       } else {
         alert("Failed to send message. Try again.");
       }
@@ -108,8 +108,8 @@ function UserChatDisplay(props) {
               placeholder={`sending message to ${
                 selectedUser.email.split("@")[0]
               } (id ${selectedUser.id})`}
-              value={message}
-              onChange={(event) => setMessage(event.target.value)}
+              value={messageUser}
+              onChange={(event) => setMessageUser(event.target.value)}
             />
             <button onClick={handleMessage}>Send Message</button>
           </div>

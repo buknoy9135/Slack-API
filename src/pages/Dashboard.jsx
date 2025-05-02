@@ -13,16 +13,19 @@ function Dashboard(props) {
   const [loading, setLoading] = useState(true); //controls the loading text to appear/hide  
   const [userList, setUserList] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [message, setMessage] = useState();
+  const [messageUser, setMessageUser] = useState();
 
   //useState for Channels
-  
+  const [channelList, setChannelList] = useState([]);
+  const [loadingChannel, setLoadingChannel] = useState(true);
+  const [showChannels, setShowChannels] = useState(false);
+  const [selectedChannel, setSelectedChannel] = useState(null);
+  const [messageChannel, setMessageChannel] = useState();
 
   return (
     <div className="dashboard-container">
       <h2>Dashboard</h2>
       {loading && <p>Populating users, please wait...</p>}
-      {/* <button onClick={sendMessage}>Message</button> */}
       <button onClick={onLogout}>Logout</button>
 
       <div className="show-users">
@@ -36,18 +39,34 @@ function Dashboard(props) {
           userList={userList}
           setUserList={setUserList}
           setSelectedUser={setSelectedUser}
-          setMessage={setMessage}
+          setMessageUser={setMessageUser}
           setLoading={setLoading}
         />
       )}
 
       <UserChatDisplay
         selectedUser={selectedUser}
-        message={message}
-        setMessage={setMessage}
+        messageUser={messageUser}
+        setMessageUser={setMessageUser}
       />
 
-      <ChannelList />
+      <div className="show-channels">
+        <button onClick={() => setShowChannels(!showChannels)}>
+          Channels List
+        </button>
+      </div>
+      <ChannelList 
+      channelList={channelList}
+      setChannelList={setChannelList}
+      loadingChannel={loadingChannel}
+      setLoadingChannel={setLoadingChannel}
+      messageChannel={messageChannel}
+      setMessageChannel={setMessageChannel}
+      showChannels={showChannels}
+      setShowChannels={setShowChannels}
+      selectedChannel={selectedChannel}
+      setSelectedChannel={setSelectedChannel}
+      />
       <CreateChannel userList={userList} />
 
       {/* <ChannelChatDisplay userList={userList} /> */}
