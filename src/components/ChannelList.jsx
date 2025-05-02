@@ -6,20 +6,15 @@ import UserChatDisplay from "./UserChatDisplay";
 import UserList from "./UserList";
 import ChannelChatDisplay from "./ChannelChatDisplay";
 
-function GetAllChannels(props) {
-  const {
-    channelList,
-    setChannelList,
-    loadingChannel,
-    setLoadingChannel,
-    messageChannel,
-    setMessageChannel,
-    showChannels,
-    setShowChannels, selectedChannel, setSelectedChannel
-  } = props;
+function GetAllChannels() {
   const { userHeaders } = useData();
 
   //channels useState
+  const [channelList, setChannelList] = useState([]);
+  const [loadingChannel, setLoadingChannel] = useState(true);
+  const [showChannels, setShowChannels] = useState(false);
+  const [selectedChannel, setSelectedChannel] = useState(null);
+  const [messageChannel, setMessageChannel] = useState();
 
   //function for getChannels
   const getChannels = async () => {
@@ -55,7 +50,11 @@ function GetAllChannels(props) {
   return (
     <div className="GetAllChannels-container">
       {loadingChannel && <p>Populating channels, please wait...</p>}
-
+      <div className="show-channels">
+        <button onClick={() => setShowChannels(!showChannels)}>
+          Channels List
+        </button>
+      </div>
       {showChannels &&
         channelList.map((channel) => {
           const { id, owner_id, name } = channel;

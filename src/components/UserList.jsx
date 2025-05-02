@@ -4,7 +4,7 @@ import axios from "axios";
 import { API_URL } from "../constants/Constants";
 
 function UserList(props) {
-  const { userList, setUserList, setSelectedUser, setMessageUser, setLoading } =
+  const { userList, setUserList, setSelectedUser, setMessage, setLoading } =
     props;
   const { userHeaders } = useData();
 
@@ -36,14 +36,14 @@ function UserList(props) {
   //function to select user (clickable user list)
   const handleUserClick = (user) => {
     setSelectedUser(user);
-    setMessageUser(""); //reset message when changing users
+    setMessage(""); //reset message when changing users
   };
 
   if (!userList || userList.length === 0) {
     return <div>No users available...</div>;
   }
   return (
-    <div className="UserList-container">
+    <>
       {userList
         .filter((invidual) => invidual.id >= 194) // filter to display only IDs 194 and up
         .sort((a, b) => {
@@ -73,7 +73,7 @@ function UserList(props) {
             </div>
           );
         })}
-    </div>
+    </>
   );
 }
 
