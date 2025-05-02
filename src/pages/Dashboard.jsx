@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import UserChatDisplay from "../components/UserChatDisplay";
 import UserList from "../components/UserList";
-import ChannelChatDisplay from "../components/ChannelChatDisplay";
+// import ChannelChatDisplay from "../components/ChannelChatDisplay";
 import ChannelList from "../components/ChannelList";
 import CreateChannel from "../components/CreateChannel.jsx";
 
@@ -47,7 +47,23 @@ function Dashboard(props) {
         setMessage={setMessage}
       />
 
-      <ChannelList />
+      <div className="show-channels">
+        <button onClick={() => setShowChannels(!showChannels)}>
+          Channels List
+        </button>
+      </div>
+      <ChannelList 
+      channelList={channelList}
+      setChannelList={setChannelList}
+      loadingChannel={loadingChannel}
+      setLoadingChannel={setLoadingChannel}
+      messageChannel={messageChannel}
+      setMessageChannel={setMessageChannel}
+      showChannels={showChannels}
+      setShowChannels={setShowChannels}
+      selectedChannel={selectedChannel}
+      setSelectedChannel={setSelectedChannel}
+      />
       <CreateChannel userList={userList} />
 
       {/* <ChannelChatDisplay userList={userList} /> */}
