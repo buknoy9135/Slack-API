@@ -1,10 +1,10 @@
 
-// function DisplayArea() {
-//     return(
-//         <div className="DisplayArea-container">
+function DisplayArea() {
+    return(
+        <div className="DisplayArea-container">
 
-//         </div>
-//     )
-// }
+        </div>
+    )
+}
 
-// export default DisplayArea;
+export default DisplayArea;
