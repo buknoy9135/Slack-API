@@ -1,47 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useData } from "../context/DataProvider";
-import axios from "axios";
-import { API_URL } from "../constants/Constants";
+import React, { useState } from "react";
 import UserChatDisplay from "../components/UserChatDisplay";
+import UserList from "../components/UserList";
+// import ChannelChatDisplay from "../components/ChannelChatDisplay";
+import ChannelList from "../components/ChannelList";
+import CreateChannel from "../components/CreateChannel.jsx";
 
 function Dashboard(props) {
   const { onLogout } = props;
-  const { userHeaders } = useData();
-  const [userList, setUserList] = useState([]);
-  const [loading, setLoading] = useState(true); //controls the loading text to appear/hide
+
+  //useState for Users
   const [showUsers, setShowUsers] = useState(false); //toggle hide/show the users
+  const [loading, setLoading] = useState(true); //controls the loading text to appear/hide  
+  const [userList, setUserList] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [message, setMessage] = useState();
 
-  const getUsers = async () => {
-    try {
-      // axios.get(url, object that has the headers key - value would be the required headers)
-      const requestHeaders = {
-        headers: userHeaders,
-      };
-      const response = await axios.get(`${API_URL}/users`, requestHeaders);
-      const { data } = response;
-      setUserList(data.data);
-    } catch (error) {
-      if (error) {
-        return alert("Cannot get users");
-      }
-    } finally {
-      setLoading(false); // success or not, will stop loading
-    }
-  };
-
-  useEffect(() => {
-    if (userList.length === 0) {
-      getUsers();
-    }
-  },);
-
-  //function to select user (clickable user list)
-  const handleUserClick = (user) => {
-    setSelectedUser(user);
-    setMessage(""); //reset message when changing users
-  };
+  //useState for Channels
+  
 
   return (
     <div className="dashboard-container">
@@ -51,45 +26,31 @@ function Dashboard(props) {
       <button onClick={onLogout}>Logout</button>
 
       <div className="show-users">
-        <button onClick={() => setShowUsers(!showUsers)}>User List</button>
+        <button onClick={() => setShowUsers(!showUsers)}>
+          Direct Messages
+        </button>
       </div>
 
-      {showUsers &&
-        userList &&
-        userList
-          .filter((invidual) => invidual.id >= 194) // filter to display only IDs 194 and up
-          .sort((a, b) => {
-            const emailA = a.email.toLowerCase();
-            const emailB = b.email.toLowerCase();
-            return emailA.localeCompare(emailB); //sort alphabetically the email
-          })
-          .map((individual) => {
-            const { id, email } = individual;
-            const username = email.split("@")[0]; //remove @ onwards of email to get username
-            return (
-              <div
-                className="user-select-pointer"
-                key={id}
-                onClick={() => handleUserClick(individual)}
-                style={{
-                  cursor: "pointer",
-                  borderBottom: "1px solid #ccc",
-                  padding: "0.5rem",
-                }}
-              >
-                <p>ID: {id}</p>
-                <p>
-                  <strong>{username}</strong>
-                </p>
-              </div>
-            );
-          })}
-      {!userList && <div>No users available...</div>}
+      {showUsers && (
+        <UserList
+          userList={userList}
+          setUserList={setUserList}
+          setSelectedUser={setSelectedUser}
+          setMessage={setMessage}
+          setLoading={setLoading}
+        />
+      )}
+
       <UserChatDisplay
         selectedUser={selectedUser}
         message={message}
         setMessage={setMessage}
       />
+
+      <ChannelList />
+      <CreateChannel userList={userList} />
+
+      {/* <ChannelChatDisplay userList={userList} /> */}
     </div>
   );
 }

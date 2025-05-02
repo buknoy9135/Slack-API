@@ -80,7 +80,7 @@ function UserChatDisplay(props) {
   return (
     <div className="UserChatDisplay-container">
       <div className="userchat-display">
-        <div className="userchat-display">
+        <div className="userchat-history-display">
           {chatUserMessages.length > 0 ? (
             chatUserMessages.map((msg, index) => (
               <div
@@ -101,13 +101,13 @@ function UserChatDisplay(props) {
         {selectedUser ? (
           <div className="message-input">
             <textarea
-              rows="4"
+              rows="3"
               cols="50"
               name="comment"
               type="text"
               placeholder={`sending message to ${
                 selectedUser.email.split("@")[0]
-              } (${selectedUser.id})`}
+              } (id ${selectedUser.id})`}
               value={message}
               onChange={(event) => setMessage(event.target.value)}
             />
