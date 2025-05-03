@@ -25,6 +25,7 @@ function Dashboard(props) {
   return (
     <div className="dashboard-container">
       <h2>Dashboard</h2>
+
       {loading && <p>Populating users, please wait...</p>}
 
       <div className="show-users">
@@ -40,14 +41,11 @@ function Dashboard(props) {
           setSelectedUser={setSelectedUser}
           setMessage={setMessage}
           setLoading={setLoading}
+          setSelectedChannel={setSelectedChannel}
         />
       )}
 
-      <UserChatDisplay
-        selectedUser={selectedUser}
-        message={message}
-        setMessage={setMessage}
-      />
+      {loadingChannel && <p>Populating channels, please wait...</p>}
 
       <div className="show-channels">
         <button onClick={() => setShowChannels(!showChannels)}>
@@ -55,7 +53,6 @@ function Dashboard(props) {
         </button>
       </div>
 
-      {loadingChannel && <p>Populating channels, please wait...</p>}
       {showChannels && (
         <ChannelList
           channelList={channelList}
@@ -63,16 +60,33 @@ function Dashboard(props) {
           setLoadingChannel={setLoadingChannel}
           setSelectedChannel={setSelectedChannel}
           setMessageChannel={setMessageChannel}
+          setSelectedUser={setSelectedUser}
         />
       )}
 
       <CreateChannel userList={userList} />
 
-      <ChannelChatDisplay
-        selectedChannel={selectedChannel}
-        messageChannel={messageChannel}
-        setMessageChannel={setMessageChannel}
-      />
+      <div className="chat-display-area">
+        {selectedUser && !selectedChannel && (
+          <UserChatDisplay
+            selectedUser={selectedUser}
+            message={message}
+            setMessage={setMessage}
+          />
+        )}
+
+        {selectedChannel && !selectedUser && (
+          <ChannelChatDisplay
+            selectedChannel={selectedChannel}
+            messageChannel={messageChannel}
+            setMessageChannel={setMessageChannel}
+          />
+        )}
+
+        {!selectedUser && !selectedChannel && (
+          <div>Select User or Channel to message</div>
+        )}
+      </div>
 
       <button onClick={onLogout}>Logout</button>
     </div>

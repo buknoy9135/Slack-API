@@ -9,7 +9,7 @@ function GetAllChannels(props) {
     setChannelList,
     setLoadingChannel,
     setSelectedChannel,
-    setMessageChannel,
+    setMessageChannel, setSelectedUser
   } = props;
 
   const { userHeaders } = useData();
@@ -42,6 +42,7 @@ function GetAllChannels(props) {
   //   function to select channel and make it clickable
   const handleChannelClick = (channel) => {
     setSelectedChannel(channel);
+    setSelectedUser(null); //disables display of user messages
     setMessageChannel(""); //reset message when changing channels
   };
 

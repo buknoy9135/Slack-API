@@ -4,7 +4,7 @@ import axios from "axios";
 import { API_URL } from "../constants/Constants";
 
 function UserList(props) {
-  const { userList, setUserList, setSelectedUser, setMessage, setLoading } =
+  const { userList, setUserList, setSelectedUser, setMessage, setLoading, setSelectedChannel } =
     props;
   const { userHeaders } = useData();
 
@@ -36,6 +36,7 @@ function UserList(props) {
   //function to select user (clickable user list)
   const handleUserClick = (user) => {
     setSelectedUser(user);
+    setSelectedChannel(null); //disables display of channel messages
     setMessage(""); //reset message when changing users
   };
 
