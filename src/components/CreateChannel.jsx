@@ -96,6 +96,8 @@ function CreateChannel(props) {
           </button>
         </form>
       )}
+
+      
     </div>
   );
 }

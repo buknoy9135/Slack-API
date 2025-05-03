@@ -3,9 +3,10 @@ import { useData } from "../context/DataProvider";
 import axios from "axios";
 import { API_URL } from "../constants/Constants";
 import "../css/ChannelChatDisplay.css";
+import ChannelDetails from "./ChannelDetails";
 
 function ChannelChatDisplay(props) {
-  const { selectedChannel, messageChannel, setMessageChannel } = props;
+  const { selectedChannel, messageChannel, setMessageChannel, channelOwner } = props;
 
   const { userHeaders } = useData();
   const [chatChannelMessages, setChatChannelMessages] = useState([]);
@@ -78,6 +79,11 @@ function ChannelChatDisplay(props) {
   return (
     <div className="ChannelChatDisplay-container">
       <div className="channelchat-display">
+        <div className="addmember">
+          {/* Channel Details */}
+          <ChannelDetails selectedChannel={selectedChannel} channelOwner={channelOwner}/>
+          {/* add member component */}
+        </div>
         <div className="channelchat-history-display">
           {chatChannelMessages.length > 0 ? (
             chatChannelMessages.map((msg, index) => (

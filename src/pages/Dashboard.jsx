@@ -22,6 +22,11 @@ function Dashboard(props) {
   const [selectedChannel, setSelectedChannel] = useState(null);
   const [messageChannel, setMessageChannel] = useState();
 
+  //function to get the details of channel owner (API channel details display only the ID)
+  const channelOwner = selectedChannel
+  ? userList.find((user) => user.id === selectedChannel.owner_id)
+  : null;
+
   return (
     <div className="dashboard-container">
       <h2>Dashboard</h2>
@@ -71,7 +76,7 @@ function Dashboard(props) {
           <UserChatDisplay
             selectedUser={selectedUser}
             message={message}
-            setMessage={setMessage}
+            setMessage={setMessage}            
           />
         )}
 
@@ -80,11 +85,19 @@ function Dashboard(props) {
             selectedChannel={selectedChannel}
             messageChannel={messageChannel}
             setMessageChannel={setMessageChannel}
+            channelOwner={channelOwner} //pass thru ChannelChatDisplay then to ChannelDetails
           />
         )}
 
         {!selectedUser && !selectedChannel && (
           <div>Select User or Channel to message</div>
+        )}
+
+        {selectedUser && selectedChannel && (
+          <div>
+            If you're able to display this, check again. Maybe you have two
+            active mouse clicking at the same time.
+          </div>
         )}
       </div>
 
