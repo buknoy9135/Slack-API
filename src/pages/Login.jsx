@@ -3,6 +3,7 @@ import axios from "axios";
 import { API_URL } from "../constants/Constants";
 import { useNavigate } from "react-router-dom";
 import { useData } from "../context/DataProvider";
+import "../css/Login.css";
 
 function Login(props) {
   const { onLogin } = props;
@@ -63,11 +64,22 @@ function Login(props) {
           />
         </div>
         <div className="password-input">
-            <label>Password:</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <label>Password:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
         <button type="submit">Login</button>
       </form>
+
+      {/* Sign up page */}
+      <div className="signup-prompt">
+        <span>
+          Don't have an account? <a href="/signup">Sign Up</a>
+        </span>
+      </div>
     </div>
   );
 }

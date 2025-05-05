@@ -4,12 +4,20 @@ import axios from "axios";
 import { API_URL } from "../constants/Constants";
 import "../css/ChannelChatDisplay.css";
 import ChannelDetails from "./ChannelDetails";
+import AddMember from "./AddMember";
 
 function ChannelChatDisplay(props) {
-  const { selectedChannel, messageChannel, setMessageChannel, channelOwner } = props;
+  const {
+    selectedChannel,
+    messageChannel,
+    setMessageChannel,
+    channelOwner,
+    userList
+  } = props;
 
   const { userHeaders } = useData();
   const [chatChannelMessages, setChatChannelMessages] = useState([]);
+  const [showModalChannelDetails, setShowModalChannelDetails] = useState(false);
 
   //Fetch channel messages function
   useEffect(() => {
@@ -81,8 +89,21 @@ function ChannelChatDisplay(props) {
       <div className="channelchat-display">
         <div className="addmember">
           {/* Channel Details */}
-          <ChannelDetails selectedChannel={selectedChannel} channelOwner={channelOwner}/>
+          <button
+            onClick={() => setShowModalChannelDetails(!showModalChannelDetails)}
+          >
+            Channel Details
+          </button>
+          {showModalChannelDetails && (
+            <ChannelDetails
+              selectedChannel={selectedChannel}
+              channelOwner={channelOwner}
+              userList={userList}
+            />
+          )}
+
           {/* add member component */}
+          <AddMember userList={userList} selectedChannel={selectedChannel} />
         </div>
         <div className="channelchat-history-display">
           {chatChannelMessages.length > 0 ? (

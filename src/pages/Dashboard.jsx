@@ -4,6 +4,7 @@ import UserList from "../components/UserList";
 import ChannelChatDisplay from "../components/ChannelChatDisplay";
 import ChannelList from "../components/ChannelList";
 import CreateChannel from "../components/CreateChannel.jsx";
+import "../css/Dashboard.css";
 
 function Dashboard(props) {
   const { onLogout } = props;
@@ -24,59 +25,73 @@ function Dashboard(props) {
 
   //function to get the details of channel owner (API channel details display only the ID)
   const channelOwner = selectedChannel
-  ? userList.find((user) => user.id === selectedChannel.owner_id)
-  : null;
+    ? userList.find((user) => user.id === selectedChannel.owner_id)
+    : null;
 
   return (
     <div className="dashboard-container">
-      <h2>Dashboard</h2>
+      {/* <h2>Dashboard</h2> */}
+      <nav className="navleft-container">
+        {loading && <p>Populating users, please wait...</p>}
 
-      {loading && <p>Populating users, please wait...</p>}
+        <div className="show-users-container">
+          <div className="show-user-button">
+            <button onClick={() => setShowUsers(!showUsers)}>
+              ▿ Direct Messages
+            </button>
+          </div>
 
-      <div className="show-users">
-        <button onClick={() => setShowUsers(!showUsers)}>
-          Direct Messages
-        </button>
-      </div>
+          <div className="user-list-container hide-scrollbar">
+            {showUsers && (
+              <UserList
+                userList={userList}
+                setUserList={setUserList}
+                setSelectedUser={setSelectedUser}
+                setMessage={setMessage}
+                setLoading={setLoading}
+                setSelectedChannel={setSelectedChannel}
+              />
+            )}
+          </div>
+        </div>
 
-      {showUsers && (
-        <UserList
-          userList={userList}
-          setUserList={setUserList}
-          setSelectedUser={setSelectedUser}
-          setMessage={setMessage}
-          setLoading={setLoading}
-          setSelectedChannel={setSelectedChannel}
-        />
-      )}
+        {loadingChannel && <p>Populating channels, please wait...</p>}
 
-      {loadingChannel && <p>Populating channels, please wait...</p>}
+        <div className="show-channels-container">
+          <div className="show-channel-button">
+            <button onClick={() => setShowChannels(!showChannels)}>
+              ▿ Channels List
+            </button>
+          </div>
 
-      <div className="show-channels">
-        <button onClick={() => setShowChannels(!showChannels)}>
-          Channels List
-        </button>
-      </div>
+          <div className="channel-list-container hide-scrollbar">
+            {showChannels && (
+              <ChannelList
+                channelList={channelList}
+                setChannelList={setChannelList}
+                setLoadingChannel={setLoadingChannel}
+                setSelectedChannel={setSelectedChannel}
+                setMessageChannel={setMessageChannel}
+                setSelectedUser={setSelectedUser}
+              />
+            )}
+          </div>
+        </div>
 
-      {showChannels && (
-        <ChannelList
-          channelList={channelList}
-          setChannelList={setChannelList}
-          setLoadingChannel={setLoadingChannel}
-          setSelectedChannel={setSelectedChannel}
-          setMessageChannel={setMessageChannel}
-          setSelectedUser={setSelectedUser}
-        />
-      )}
-
-      <CreateChannel userList={userList} />
+        <div className="create-channel-container">
+          <CreateChannel userList={userList} />
+        </div>
+        <div className="logout-button">
+          <button onClick={onLogout}>⏻ Logout</button>
+        </div>
+      </nav>
 
       <div className="chat-display-area">
         {selectedUser && !selectedChannel && (
           <UserChatDisplay
             selectedUser={selectedUser}
             message={message}
-            setMessage={setMessage}            
+            setMessage={setMessage}
           />
         )}
 
@@ -86,12 +101,17 @@ function Dashboard(props) {
             messageChannel={messageChannel}
             setMessageChannel={setMessageChannel}
             channelOwner={channelOwner} //pass thru ChannelChatDisplay then to ChannelDetails
+            userList={userList}
+            // selectedUserIds={selectedUserIds}
+            // setSelectedUserIds={setSelectedUserIds}
           />
         )}
 
-        {!selectedUser && !selectedChannel && (
-          <div>Select User or Channel to message</div>
-        )}
+        <div className="no-message">
+          {!selectedUser && !selectedChannel && (
+            <h3>Select User or Channel to message...</h3>
+          )}
+        </div>
 
         {selectedUser && selectedChannel && (
           <div>
@@ -100,8 +120,6 @@ function Dashboard(props) {
           </div>
         )}
       </div>
-
-      <button onClick={onLogout}>Logout</button>
     </div>
   );
 }

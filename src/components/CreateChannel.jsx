@@ -63,8 +63,8 @@ function CreateChannel(props) {
   return (
     <div className="CreateChannel-container">
       <div>
-        <button onClick={() => setShowModalChannel(true)}>
-          Create Channel
+        <button className="create-channel-button" onClick={() => setShowModalChannel(true)}>
+        ✙ Create Channel
         </button>
       </div>
       {showModalChannel && (

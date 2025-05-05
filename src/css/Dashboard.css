@@ -1,0 +1,98 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    overflow-y: hidden;
+    margin: 0;
+    font-family: 'Inter', 'Roboto', 'Helvetica Neue', sans-serif;
+    background-color: #0D1117;
+    color: #F0F6FC;
+}
+
+.dashboard-container {
+    display: flex;
+    padding-inline: 10%;
+    height: 100%;
+    background-color: #0D1117;
+}
+
+.chat-display-area {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    height: calc(100vh - 20px);
+    border: #2D3A45 solid 2px;
+    border-left: none;
+    margin: 10px 5px 10px 0px;
+    background-color: #1F2933;
+    color: #F0F6FC;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.navleft-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 30%;
+    height: calc(100vh - 20px);
+    border: #2D3A45 solid 2px;
+    margin: 10px 0px 10px 5px;
+    background-color: #161B22;
+    color: #F0F6FC;
+    overflow: auto;
+    padding: 40px 20px 40px 50px;
+    font-size: 1rem;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+/* user & channel containers */
+.show-users-container,
+.show-channels-container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
+    max-height: 60%;
+}
+
+.user-list-container,
+.channel-list-container {
+    padding: 10px 30px;
+    overflow-y: auto;
+    color: #58A6FF;
+}
+
+/* buttons */
+.show-user-button button,
+.show-channel-button button,
+.create-channel-container button,
+.logout-button button {
+    background-color: transparent;
+    border: none;
+    color: #F0F6FC;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.show-user-button button:hover,
+.show-channel-button button:hover,
+.create-channel-container button:hover,
+.logout-button button:hover {
+    color: #FF7B72;
+}
+
+.user-id {
+    font-size: 0.7rem;
+    color: #8B949E;
+}
+
+/* no message display */
+.no-message h3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}

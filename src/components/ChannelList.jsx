@@ -62,10 +62,10 @@ function GetAllChannels(props) {
             style={{ cursor: "pointer", padding: "0.2rem" }}
           >
             <span>
-              <strong> {name} </strong>
+              {name}
             </span>
-            <span> {owner_id} (owner ID) </span>
-            <span> {id} (channel ID) </span>
+            {/* <span> {owner_id} (owner ID) </span>
+            <span> {id} (channel ID) </span> */}
           </div>
         );
       })}

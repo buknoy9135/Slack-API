@@ -4,8 +4,14 @@ import axios from "axios";
 import { API_URL } from "../constants/Constants";
 
 function UserList(props) {
-  const { userList, setUserList, setSelectedUser, setMessage, setLoading, setSelectedChannel } =
-    props;
+  const {
+    userList,
+    setUserList,
+    setSelectedUser,
+    setMessage,
+    setLoading,
+    setSelectedChannel,
+  } = props;
   const { userHeaders } = useData();
 
   //function for getUsers
@@ -56,21 +62,23 @@ function UserList(props) {
           const { id, email } = individual;
           const username = email.split("@")[0]; //remove @ onwards of email to get username
           return (
-            <div
-              className="user-select-pointer"
-              key={id}
-              onClick={() => handleUserClick(individual)}
-              style={{
-                cursor: "pointer",
-                // borderBottom: "1px solid #ccc",
-                padding: "0.2rem",
-              }}
-            >
-              <span>
-                <strong>{username}</strong>
-                <span> </span>
-              </span>
-              <span>(ID: {id})</span>
+            <div className="hide-scrollbar">
+              <div
+                className="user-select-pointer"
+                key={id}
+                onClick={() => handleUserClick(individual)}
+                style={{
+                  cursor: "pointer",
+                  // borderBottom: "1px solid #ccc",
+                  padding: "0.2rem",
+                }}
+              >
+                <span>
+                  {username}
+                  <span> </span>
+                </span>
+                <span className="user-id">(ID: {id})</span>
+              </div>
             </div>
           );
         })}
