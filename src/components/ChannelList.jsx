@@ -9,7 +9,8 @@ function GetAllChannels(props) {
     setChannelList,
     setLoadingChannel,
     setSelectedChannel,
-    setMessageChannel, setSelectedUser
+    setMessageChannel,
+    setSelectedUser,
   } = props;
 
   const { userHeaders } = useData();
@@ -34,10 +35,14 @@ function GetAllChannels(props) {
   };
 
   useEffect(() => {
-    if (channelList.length === 0) {
-      getChannels();
+    if (!Array.isArray(channelList) || channelList.length === 0) {
+      getChannels().then((channels) => {
+        console.log("Fetched channels:", channels);
+      });
     }
-  });
+  }
+  // , [channelList]
+);
 
   //   function to select channel and make it clickable
   const handleChannelClick = (channel) => {
@@ -53,7 +58,7 @@ function GetAllChannels(props) {
   return (
     <div className="GetAllChannels-container">
       {channelList.map((channel) => {
-        const { id, owner_id, name } = channel;
+        const { id,  name } = channel;
         return (
           <div
             className="channel-select-pointer"
@@ -61,9 +66,7 @@ function GetAllChannels(props) {
             onClick={() => handleChannelClick(channel)}
             style={{ cursor: "pointer", padding: "0.2rem" }}
           >
-            <span>
-              {name}
-            </span>
+            <span>{name}</span>
             {/* <span> {owner_id} (owner ID) </span>
             <span> {id} (channel ID) </span> */}
           </div>

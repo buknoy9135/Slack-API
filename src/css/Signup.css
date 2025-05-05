@@ -1,0 +1,134 @@
+.signup-container {
+    height: 100vh;
+    width: 100%;
+    background-color: #0D1117;
+    color: #F0F6FC;
+    font-family: 'Inter', 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.signup-container h2 {
+    font-size: 2rem;
+    margin-bottom: 24px;
+    color: #58A6FF;
+    letter-spacing: 0.5px;
+}
+
+form {
+    background-color: #1F2933;
+    border: 2px solid #2D3A45;
+    border-radius: 16px;
+    padding: 36px 28px;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.email-input,
+.password-input,
+.confirm-password-input {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+    color: #8B949E;
+}
+
+input {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #2D3A45;
+    background-color: #0D1117;
+    color: #F0F6FC;
+    font-size: 1rem;
+    transition: border 0.2s ease, background-color 0.2s ease;
+}
+
+input:focus {
+    border-color: #58A6FF;
+    outline: none;
+    background-color: #161B22;
+}
+
+button[type="submit"] {
+    padding: 12px;
+    border: 1px solid #58A6FF;
+    background-color: transparent;
+    color: #F0F6FC;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #58A6FF;
+    color: #0D1117;
+}
+
+button[type="submit"]:focus {
+    outline: 2px solid #58A6FF;
+    outline-offset: 2px;
+}
+
+.login-prompt {
+    margin-top: 20px;
+    font-size: 0.95rem;
+    color: #8B949E;
+    text-align: center;
+}
+
+.login-prompt a {
+    color: #58A6FF;
+    text-decoration: none;
+    margin-left: 4px;
+    font-weight: 500;
+}
+
+.login-prompt a:hover {
+    color: #FF7B72;
+    text-decoration: underline;
+}
+
+input::placeholder {
+    font-style: italic;
+    font-size: 0.9rem;
+    text-align: end;
+}
+
+.login-prompt {
+    margin-top: 12px;
+    font-size: 0.95rem;
+    color: #8B949E;
+    text-align: center;
+}
+
+.login-prompt span {
+    color: #58A6FF;
+    margin-left: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.login-prompt span:hover {
+    color: #FF7B72;
+    text-decoration: underline;
+}
+
+
+@media (max-width: 480px) {
+    form {
+        padding: 28px 20px;
+    }
+}

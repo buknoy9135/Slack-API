@@ -2,6 +2,7 @@ import './App.css';
 import React, { useState } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import DataProvider from './context/DataProvider';
 import './App.css'
@@ -28,6 +29,7 @@ function App() {
         <Routes>
           {/* this will load first in the app */}
           <Route path="/login" element={<Login onLogin={handleLogin}/>} />
+          <Route path="/signup" element={<Signup />} />
 
           {/* Protected pages. User should be authenticated first before they can access this page */}
           <Route path="/dashboard" element={
