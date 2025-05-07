@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useData } from "../context/DataProvider";
 import axios from "axios";
 import { API_URL } from "../constants/Constants";
-import avatar_group from '../assets/group.png'
+import avatar_group from "../assets/group.png";
 
 function GetAllChannels(props) {
   const {
@@ -35,15 +35,16 @@ function GetAllChannels(props) {
     }
   };
 
-  useEffect(() => {
-    if (!Array.isArray(channelList) || channelList.length === 0) {
-      getChannels().then((channels) => {
-        console.log("Fetched channels:", channels);
-      });
+  useEffect(
+    () => {
+      if (!Array.isArray(channelList) || channelList.length === 0) {
+        getChannels().then((channels) => {
+          console.log("Fetched channels:", channels);
+        });
+      }
     }
-  }
-  // , [channelList]
-);
+    // , [channelList]
+  );
 
   //   function to select channel and make it clickable
   const handleChannelClick = (channel) => {
@@ -58,21 +59,36 @@ function GetAllChannels(props) {
 
   return (
     <div className="GetAllChannels-container">
-      {channelList.map((channel) => {
-        const { id,  name } = channel;
-        return (
-          <div
-            className="channel-select-pointer"
-            key={id}
-            onClick={() => handleChannelClick(channel)}
-            style={{ cursor: "pointer", padding: "0.2rem" }}
-          >
-            <span><img className="group-avatar"src={avatar_group} alt="avatar group" width="20px" height="18px" /> {name}</span>
-            {/* <span> {owner_id} (owner ID) </span>
+      {channelList.sort((a, b) => {
+          const channelA = a.name.toLowerCase();
+          const channelB = b.name.toLowerCase();
+          return channelA.localeCompare(channelB);
+        })
+        .map((channel) => {
+          const { id, name } = channel;
+          return (
+            <div
+              className="channel-select-pointer"
+              key={id}
+              onClick={() => handleChannelClick(channel)}
+              style={{ cursor: "pointer", padding: "0.2rem" }}
+            >
+              <span>
+                <img
+                  className="group-avatar"
+                  src={avatar_group}
+                  alt="avatar group"
+                  width="20px"
+                  height="18px"
+                />{" "}
+                {name}
+              </span>
+              {/* <span> {owner_id} (owner ID) </span>
             <span> {id} (channel ID) </span> */}
-          </div>
-        );
-      })}
+            </div>
+          );
+        })
+        }
     </div>
   );
 }

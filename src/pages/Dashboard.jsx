@@ -5,7 +5,7 @@ import ChannelChatDisplay from "../components/ChannelChatDisplay";
 import ChannelList from "../components/ChannelList";
 import CreateChannel from "../components/CreateChannel.jsx";
 import "../css/Dashboard.css";
-// import logo from '../assets/disowned_3.png'
+
 
 function Dashboard(props) {
   const { onLogout } = props;
@@ -29,6 +29,9 @@ function Dashboard(props) {
   const channelOwner = selectedChannel
     ? userList.find((user) => user.id === selectedChannel.owner_id)
     : null;
+
+  //props for Channel Details component then thru ChannelChatDisplay then thru AddMember component
+  const [memberUserIds, setMemberUserIds] = useState([]);
 
   return (
     <div className="dashboard-container">
@@ -108,8 +111,8 @@ function Dashboard(props) {
             setMessageChannel={setMessageChannel}
             channelOwner={channelOwner} //pass thru ChannelChatDisplay then to ChannelDetails
             userList={userList}
-            // selectedUserIds={selectedUserIds}
-            // setSelectedUserIds={setSelectedUserIds}
+            memberUserIds={memberUserIds} //pass thru ChannelChatDisplay then to ChannelDetails
+            setMemberUserIds={setMemberUserIds}
           />
         )}
 

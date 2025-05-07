@@ -6,7 +6,7 @@ import axios from "axios";
 import '../css/AddMember.css'
 
 function AddMember(props) {
-  const { userList, selectedChannel } = props;
+  const { userList, selectedChannel, existingMemberUserIds } = props;
 
   const { userHeaders } = useData();
   const [selectedUserIds, setSelectedUserIds] = useState([]);
@@ -19,7 +19,10 @@ function AddMember(props) {
     );
   };
 
-  //function to add member to a channel
+  const filteredUserList = userList.filter(
+    (user) => !existingMemberUserIds.includes(user.id)    
+  )
+  console.log(filteredUserList) //just for checking in console
   const handleAddMember = async (e) => {
     e.preventDefault();
 
@@ -34,6 +37,7 @@ function AddMember(props) {
 
     try {
       for (const userId of selectedUserIds) {
+        
         const requestBody = {
           id: Number(selectedChannel.id),
           member_id: userId,
@@ -73,7 +77,7 @@ function AddMember(props) {
       <form onSubmit={handleAddMember} className="addmember-modal-content">
         <h4>Add Member</h4>
         <UserListCheckbox
-          userList={userList}
+          userList={filteredUserList}
           selectedUserIds={selectedUserIds}
           onToggle={handleToggleUser}
         />

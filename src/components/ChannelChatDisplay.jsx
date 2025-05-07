@@ -7,7 +7,7 @@ import ChannelDetails from "./ChannelDetails";
 import AddMember from "./AddMember";
 import send_icon from "../assets/send_message.png";
 import groupavatar from "../assets/group.png";
-import avatar_person from '../assets/avatar_person.png'
+import avatar_person from "../assets/avatar_person.png";
 
 function ChannelChatDisplay(props) {
   const {
@@ -16,6 +16,8 @@ function ChannelChatDisplay(props) {
     setMessageChannel,
     channelOwner,
     userList,
+    memberUserIds,
+    setMemberUserIds,
   } = props;
 
   const { userHeaders } = useData();
@@ -94,11 +96,18 @@ function ChannelChatDisplay(props) {
           selectedChannel={selectedChannel}
           channelOwner={channelOwner}
           userList={userList}
+          memberUserIds={memberUserIds}
+          setMemberUserIds={setMemberUserIds}
         />
 
         {/* Add Member component */}
         <div className="addmember-button">
-          <AddMember userList={userList} selectedChannel={selectedChannel} />
+          <AddMember
+            userList={userList}
+            selectedChannel={selectedChannel}
+            existingMemberUserIds={memberUserIds}
+            setExistingMemberUserIds={setMemberUserIds}
+          />
         </div>
       </div>
 
@@ -114,7 +123,16 @@ function ChannelChatDisplay(props) {
                   }`}
                 >
                   {msg.sender?.email === userHeaders.uid ? (
-                    <>{msg.body} <img className="sender-avatar" src={avatar_person} alt="avatar person" width="16px" height="16px" /></> 
+                    <>
+                      {msg.body}{" "}
+                      <img
+                        className="sender-avatar"
+                        src={avatar_person}
+                        alt="avatar person"
+                        width="16px"
+                        height="16px"
+                      />
+                    </>
                   ) : (
                     <>
                       <span className="sender-username">

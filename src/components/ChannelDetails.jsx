@@ -4,7 +4,7 @@ import { API_URL } from "../constants/Constants";
 import axios from "axios";
 import "../css/ChannelDetails.css";
 
-function ChannelDetails({ selectedChannel, channelOwner, userList }) {
+function ChannelDetails({ selectedChannel, channelOwner, userList, memberUserIds, setMemberUserIds }) {
   const { userHeaders } = useData();
   const [channelData, setChannelData] = useState();
   const [showModal, setShowModal] = useState(false); // Control the modal visibility
@@ -31,6 +31,16 @@ function ChannelDetails({ selectedChannel, channelOwner, userList }) {
     };
     fetchChannelDetails();
   }, [selectedChannel, userHeaders]);
+
+
+  // function to extract list of user IDs to be later props to Add Member to Channel component
+  useEffect(() => {
+    if (channelData?.channel_members) {
+      const ids = channelData.channel_members.map((member) => member.user_id);
+      setMemberUserIds(ids);
+      console.log(memberUserIds)
+    }
+  }, [channelData])
 
   return (
     <>
