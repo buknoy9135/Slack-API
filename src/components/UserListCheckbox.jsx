@@ -8,7 +8,7 @@ function UserListCheckbox(props) {
   }
 
   return (
-    <>
+    <div className="user-list-scrollbox">
       {userList
         .filter((user) => user.id >= 194)
         .sort((a, b) => a.email.localeCompare(b.email))
@@ -18,8 +18,8 @@ function UserListCheckbox(props) {
           const isChecked = selectedUserIds.includes(id);
 
           return (
-            <div key={id}>
-              <label>
+            
+              <label key={id} className="user-checkbox-item">
                 <input
                   type="checkbox"
                   value={id}
@@ -28,10 +28,10 @@ function UserListCheckbox(props) {
                 />
                 {username} (ID: {id})
               </label>
-            </div>
+            
           );
         })}
-    </>
+    </div>
   );
 }
 

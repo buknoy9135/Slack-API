@@ -16,6 +16,8 @@ html, body {
     padding-inline: 10%;
     height: 100%;
     background-color: #0D1117;
+    width: 90%;
+    margin-inline: auto;
 }
 
 .chat-display-area {
@@ -77,6 +79,10 @@ html, body {
     cursor: pointer;
 }
 
+.create-channel-container button {
+    padding-bottom: 20px;
+}
+
 .show-user-button button:hover,
 .show-channel-button button:hover,
 .create-channel-container button:hover,
@@ -96,3 +102,10 @@ html, body {
     align-items: center;
     height: 100vh;
 }
+
+img.group-avatar, img.person-avatar {
+    align-items: center;
+    align-content: center;
+    vertical-align: middle;
+    padding-right: 2px;
+  }

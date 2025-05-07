@@ -3,6 +3,7 @@ import { useData } from "../context/DataProvider";
 import { API_URL } from "../constants/Constants";
 import axios from "axios";
 import UserListCheckbox from "./UserListCheckbox";
+import "../css/CreateChannel.css";
 
 function CreateChannel(props) {
   const { userList } = props;
@@ -50,6 +51,7 @@ function CreateChannel(props) {
 
       if (data.data) {
         alert(`Successfully created a channel: ${channelName}`);
+        console.log(createdChannel);
         setCreatedChannel(data.data);
         setShowModalChannel(false);
         setChannelName("");
@@ -63,41 +65,53 @@ function CreateChannel(props) {
   return (
     <div className="CreateChannel-container">
       <div>
-        <button className="create-channel-button" onClick={() => setShowModalChannel(true)}>
-        ✙ Create Channel
+        <button
+          className="create-channel-button"
+          onClick={() => setShowModalChannel(true)}
+        >
+          ✙ Create Channel
         </button>
       </div>
       {showModalChannel && (
-        <form onSubmit={handleAddChannel}>
-          <label>Channel Name:</label>
-          <input
-            type="text"
-            required
-            maxLength={15}
-            value={channelName}
-            onChange={(e) => setChannelName(e.target.value)}
-          />
-          <h4>Select Members:</h4>
-          <UserListCheckbox
-            userList={userList}
-            selectedUserIds={selectedUserIds}
-            onToggle={handleToggleUser}
-          />
-          <button type="submit">Add Channel</button>
-          <button
-            type="button"
-            onClick={() => {
-              setShowModalChannel(false);
-              setSelectedUserIds([]);
-              setChannelName("");
-            }}
-          >
-            Cancel
-          </button>
-        </form>
-      )}
+        <div className="modal-overlay">
+          <form className="modal-content" onSubmit={handleAddChannel}>
+            <div className="channelname-container">
+              <h4>Channel Name:</h4>
+              <input
+                type="text"
+                required
+                placeholder="max 15 characters only"
+                maxLength={15}
+                value={channelName}
+                onChange={(e) => setChannelName(e.target.value)}
+              />
+            </div>
 
-      
+            <div className="select-members-container">
+              <h4>Select Members:</h4>
+              <UserListCheckbox
+                userList={userList}
+                selectedUserIds={selectedUserIds}
+                onToggle={handleToggleUser}
+              />
+            </div>
+
+            <div className="confirm-buttons">
+              <button type="submit">Add Channel</button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowModalChannel(false);
+                  setSelectedUserIds([]);
+                  setChannelName("");
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   );
 }

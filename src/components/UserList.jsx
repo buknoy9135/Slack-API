@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useData } from "../context/DataProvider";
 import axios from "axios";
 import { API_URL } from "../constants/Constants";
+import avatar_person from "../assets/avatar_person.png";
 
 function UserList(props) {
   const {
@@ -74,6 +75,13 @@ function UserList(props) {
                 }}
               >
                 <span>
+                  <img
+                    className="person-avatar"
+                    src={avatar_person}
+                    alt="avatar person"
+                    width="16px"
+                    height="16px"
+                  />{" "}
                   {username}
                   <span> </span>
                 </span>

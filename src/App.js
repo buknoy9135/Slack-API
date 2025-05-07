@@ -2,10 +2,9 @@ import './App.css';
 import React, { useState } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Login from './pages/Login';
-import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import DataProvider from './context/DataProvider';
-import './App.css'
+import Signup from './pages/Signup'
 
 
 function App() {

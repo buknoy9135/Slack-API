@@ -3,6 +3,7 @@ import UserListCheckbox from "./UserListCheckbox";
 import { useData } from "../context/DataProvider";
 import { API_URL } from "../constants/Constants";
 import axios from "axios";
+import '../css/AddMember.css'
 
 function AddMember(props) {
   const { userList, selectedChannel } = props;
@@ -57,34 +58,40 @@ function AddMember(props) {
   };
 
   return (
-    <div className="AddMember-container">
-      <button
-        className="addmember-button"
-        onClick={() => setShowModalAddMember(true)}
-      >
-        Add Member
-      </button>
-      {showModalAddMember && (
-        <form onSubmit={handleAddMember}>
-          <h4>Add Member</h4>
-          <UserListCheckbox
-            userList={userList}
-            selectedUserIds={selectedUserIds}
-            onToggle={handleToggleUser}
-          />
-          <button type="submit">Add Member</button>
-          <button
-            type="button"
-            onClick={() => {
-              setShowModalAddMember(false);
-              setSelectedUserIds([]);
-            }}
-          >
-            Cancel
-          </button>
-        </form>
-      )}
+    <>
+  <div className="AddMember-container">
+    <button
+      className="addmember"
+      onClick={() => setShowModalAddMember(true)}
+    >
+      Add Member
+    </button>
+  </div>
+
+  {showModalAddMember && (
+    <div className="addmember-modal-backdrop">
+      <form onSubmit={handleAddMember} className="addmember-modal-content">
+        <h4>Add Member</h4>
+        <UserListCheckbox
+          userList={userList}
+          selectedUserIds={selectedUserIds}
+          onToggle={handleToggleUser}
+        />
+        <button type="submit">Add Member</button>
+        <button
+          type="button"
+          onClick={() => {
+            setShowModalAddMember(false);
+            setSelectedUserIds([]);
+          }}
+        >
+          Cancel
+        </button>
+      </form>
     </div>
+  )}
+</>
+
   );
 }
 

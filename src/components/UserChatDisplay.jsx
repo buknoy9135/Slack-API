@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { useData } from "../context/DataProvider";
 import axios from "axios";
 import { API_URL } from "../constants/Constants";
-import '../css/UserChatDisplay.css'
+import "../css/UserChatDisplay.css";
+import send_icon from "../assets/send_message.png";
+import avatar_person from '../assets/avatar_person.png'
 
 function UserChatDisplay(props) {
   const { selectedUser, message, setMessage } = props;
@@ -79,30 +81,48 @@ function UserChatDisplay(props) {
 
   return (
     <div className="UserChatDisplay-container">
+
+      <div className="user-info">
+        <button>User Details</button>
+      </div>
       <div className="userchat-display">
-        <div className="userchat-history-display">
-          {chatUserMessages.length > 0 ? (
-            chatUserMessages.map((msg, index) => (
-              <div
-                key={index}
-                className={`chat-message ${
-                  msg.sender?.email === userHeaders.uid ? "sent" : "received"
-                }`}
-              >
-                {msg.sender?.email.split("@")[0] || "User"}: {msg.body}
-              </div>
-            ))
-          ) : (
-            <p>No messages yet</p>
-          )}
+        <div className="hide-scrollbar">
+          <div className="userchat-history-display">
+            {chatUserMessages.length > 0 ? (
+              chatUserMessages.map((msg, index) => (
+                <div
+                  key={index}
+                  className={`chat-message ${
+                    msg.sender?.email === userHeaders.uid ? "sent" : "received"
+                  }`}
+                >
+                  {msg.sender?.email === userHeaders.uid ? (
+                    // Sent message: just show the message body
+                    <>{msg.body} <img className="receiver-avatar" src={avatar_person} alt="avatar person" width="16px" height="16px" /> </> 
+                  )  : (
+                    // Received message: show sender's username in blue, followed by the message body
+                    <>
+                      <span className="sender-username">
+                      <img className="sender-avatar" src={avatar_person} alt="avatar person" width="16px" height="16px" /> {msg.sender?.email.split("@")[0] || "User"}:
+                      </span>
+                      {msg.body}
+                    </>
+                  )}
+                </div>
+              ))
+            ) : (
+              <p>No messages yet</p>
+            )}
+          </div>
         </div>
       </div>
+
       <div className="userchat-input">
         {selectedUser ? (
           <div className="message-input">
             <textarea
-              rows="3"
-              cols="50"
+              rows="1"
+              cols="120"
               name="comment"
               type="text"
               placeholder={`sending message to ${
@@ -111,7 +131,19 @@ function UserChatDisplay(props) {
               value={message}
               onChange={(event) => setMessage(event.target.value)}
             />
-            <button onClick={handleMessage}>Send Message</button>
+            <div className="send-icon">
+              <button
+                onClick={handleMessage}
+                style={{ border: "none", background: "none", padding: 0 }}
+              >
+                <img
+                  src={send_icon}
+                  alt="send message icon"
+                  width="24px"
+                  height="24px"
+                />
+              </button>
+            </div>
           </div>
         ) : (
           <p>Select a user to message</p>

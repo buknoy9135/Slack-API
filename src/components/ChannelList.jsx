@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useData } from "../context/DataProvider";
 import axios from "axios";
 import { API_URL } from "../constants/Constants";
+import avatar_group from '../assets/group.png'
 
 function GetAllChannels(props) {
   const {
@@ -66,7 +67,7 @@ function GetAllChannels(props) {
             onClick={() => handleChannelClick(channel)}
             style={{ cursor: "pointer", padding: "0.2rem" }}
           >
-            <span>{name}</span>
+            <span><img className="group-avatar"src={avatar_group} alt="avatar group" width="20px" height="18px" /> {name}</span>
             {/* <span> {owner_id} (owner ID) </span>
             <span> {id} (channel ID) </span> */}
           </div>

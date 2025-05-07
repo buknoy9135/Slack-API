@@ -5,6 +5,9 @@ import { API_URL } from "../constants/Constants";
 import "../css/ChannelChatDisplay.css";
 import ChannelDetails from "./ChannelDetails";
 import AddMember from "./AddMember";
+import send_icon from "../assets/send_message.png";
+import groupavatar from "../assets/group.png";
+import avatar_person from '../assets/avatar_person.png'
 
 function ChannelChatDisplay(props) {
   const {
@@ -12,14 +15,13 @@ function ChannelChatDisplay(props) {
     messageChannel,
     setMessageChannel,
     channelOwner,
-    userList
+    userList,
   } = props;
 
   const { userHeaders } = useData();
   const [chatChannelMessages, setChatChannelMessages] = useState([]);
-  const [showModalChannelDetails, setShowModalChannelDetails] = useState(false);
 
-  //Fetch channel messages function
+  // Fetch channel messages
   useEffect(() => {
     if (!selectedChannel) return;
 
@@ -44,11 +46,11 @@ function ChannelChatDisplay(props) {
     };
 
     fetchChannelMessages();
-    const intervalId = setInterval(fetchChannelMessages, 5000); //fetch every 5 seconds
-    return () => clearInterval(intervalId); //cleanup on unmount or user change
+    const intervalId = setInterval(fetchChannelMessages, 5000); // Fetch every 5 seconds
+    return () => clearInterval(intervalId); // Cleanup on unmount or user change
   }, [selectedChannel, userHeaders]);
 
-  //Function to send channel message
+  // Send channel message
   const handleChannelMessage = async () => {
     if (!messageChannel.trim()) {
       alert("Please type a message before sending.");
@@ -74,67 +76,94 @@ function ChannelChatDisplay(props) {
 
       if (response.status === 200) {
         alert(`Message sent to ${selectedChannel.name}!`);
-        setMessageChannel(""); //clear after successful send
+        setMessageChannel(""); // Clear after successful send
       } else {
         alert("Failed to send message. Try again.");
       }
     } catch (error) {
       console.error(error);
-      alert("An error occured while sending the message.");
+      alert("An error occurred while sending the message.");
     }
   };
 
   return (
     <div className="ChannelChatDisplay-container">
-      <div className="channelchat-display">
-        <div className="addmember">
-          {/* Channel Details */}
-          <button
-            onClick={() => setShowModalChannelDetails(!showModalChannelDetails)}
-          >
-            Channel Details
-          </button>
-          {showModalChannelDetails && (
-            <ChannelDetails
-              selectedChannel={selectedChannel}
-              channelOwner={channelOwner}
-              userList={userList}
-            />
-          )}
+      <div className="channel-info">
+        {/* Channel Details will be controlled inside the ChannelDetails component */}
+        <ChannelDetails
+          selectedChannel={selectedChannel}
+          channelOwner={channelOwner}
+          userList={userList}
+        />
 
-          {/* add member component */}
+        {/* Add Member component */}
+        <div className="addmember-button">
           <AddMember userList={userList} selectedChannel={selectedChannel} />
         </div>
-        <div className="channelchat-history-display">
-          {chatChannelMessages.length > 0 ? (
-            chatChannelMessages.map((msg, index) => (
-              <div
-                key={index}
-                className={`chat-mesage ${
-                  msg.sender?.email === userHeaders.uid ? "sent" : "received"
-                }`}
-              >
-                {msg.sender?.email.split("@")[0] || "User"}: {msg.body}
-              </div>
-            ))
-          ) : (
-            <p>No messages yet</p>
-          )}
+      </div>
+
+      <div className="channelchat-display">
+        <div className="hide-scrollbar">
+          <div className="channelchat-history-display">
+            {chatChannelMessages.length > 0 ? (
+              chatChannelMessages.map((msg, index) => (
+                <div
+                  key={index}
+                  className={`chat-message ${
+                    msg.sender?.email === userHeaders.uid ? "sent" : "received"
+                  }`}
+                >
+                  {msg.sender?.email === userHeaders.uid ? (
+                    <>{msg.body} <img className="sender-avatar" src={avatar_person} alt="avatar person" width="16px" height="16px" /></> 
+                  ) : (
+                    <>
+                      <span className="sender-username">
+                        <img
+                          className="sender-avatar"
+                          src={groupavatar}
+                          alt="avatar"
+                          width="20px"
+                          height="18px"
+                        />{" "}
+                        {msg.sender?.email.split("@")[0] || "User"}:
+                      </span>
+                      {msg.body}
+                    </>
+                  )}
+                </div>
+              ))
+            ) : (
+              <p>No messages yet</p>
+            )}
+          </div>
         </div>
       </div>
+
       <div className="channelchat-input">
         {selectedChannel ? (
           <div className="message-input">
             <textarea
-              rows="3"
-              cols="50"
+              rows="1"
+              cols="120"
               name="comment"
               type="text"
               placeholder={`sending message to channel ${selectedChannel.name} (channel id ${selectedChannel.id})`}
               value={messageChannel}
               onChange={(event) => setMessageChannel(event.target.value)}
             />
-            <button onClick={handleChannelMessage}>Send Message</button>
+            <div className="send-icon">
+              <button
+                onClick={handleChannelMessage}
+                style={{ border: "none", background: "none", padding: 0 }}
+              >
+                <img
+                  src={send_icon}
+                  alt="send message icon"
+                  width="24px"
+                  height="24px"
+                />
+              </button>
+            </div>
           </div>
         ) : (
           <p>Select a channel to message</p>

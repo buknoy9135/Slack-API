@@ -5,6 +5,7 @@ import ChannelChatDisplay from "../components/ChannelChatDisplay";
 import ChannelList from "../components/ChannelList";
 import CreateChannel from "../components/CreateChannel.jsx";
 import "../css/Dashboard.css";
+// import logo from '../assets/disowned_3.png'
 
 function Dashboard(props) {
   const { onLogout } = props;
@@ -22,6 +23,7 @@ function Dashboard(props) {
   const [showChannels, setShowChannels] = useState(true);
   const [selectedChannel, setSelectedChannel] = useState(null);
   const [messageChannel, setMessageChannel] = useState();
+  
 
   //function to get the details of channel owner (API channel details display only the ID)
   const channelOwner = selectedChannel
@@ -30,9 +32,12 @@ function Dashboard(props) {
 
   return (
     <div className="dashboard-container">
-      {/* <h2>Dashboard</h2> */}
+      
       <nav className="navleft-container">
+        {/* <h2>Slack Off App</h2> */}
         {loading && <p>Populating users, please wait...</p>}
+
+        {/* <img src={logo} width="200px" alt="logo"/> */}
 
         <div className="show-users-container">
           <div className="show-user-button">

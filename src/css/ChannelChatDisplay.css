@@ -1,11 +1,201 @@
-.sent {
+/* Chat Container */
+.ChannelChatDisplay-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: #1F2933;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    overflow: hidden;
+  }
+  
+  /* Channel Info Header */
+  .channel-info {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 20px;
+    background-color: #111820;
+    border-bottom: 1px solid #30363D;
+  }
+  
+
+  /* channel button */
+  .channel-details-button button, .addmember-button button {
+    background-color: #1F2A38; /* deep blue-gray */
+    color: #D6E7FF; /* soft blue */
+    padding: 6px 12px;
+    font-size: 1rem;
+    margin-right: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: inset 1px 1px 2px #17202B, inset -1px -1px 2px #263243;
+    transition: all 0.2s ease;
+  }
+  
+  .channel-details-button button:hover, .addmember-button button:hover {
+    background-color: #243144;
+    box-shadow: 0 0 4px rgba(214, 231, 255, 0.12),
+                inset 1px 1px 2px #17202B,
+                inset -1px -1px 2px #263243;
+  }
+  
+  .channel-details-button button:active, .addmember-button button:active {
+    transform: scale(0.97);
+    box-shadow: inset 2px 2px 4px #17202B,
+                inset -2px -2px 4px #263243;
+  }
+  
+  
+  
+  .channel-details button:hover {
+    background-color: #3B4B5A;
+  }
+  
+  /* Message History Area - Auto-hiding scrollbar */
+  .channelchat-display {
+    flex: 1;
+    display: flex;
+    padding: 20px;
+    overflow-y: overlay;
+    background-color: #1F2933;
+    flex-direction: column-reverse;
+  }
+  
+  .channelchat-history-display {
+    display: flex;
+    flex-direction: column;
+    flex-direction: column-reverse;
+  }
+  
+  /* Auto-hide scrollbar styles */
+  .channelchat-display::-webkit-scrollbar {
+    width: 8px;
+    background: transparent;
+  }
+  
+  .channelchat-display::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+  
+  .channelchat-display:hover::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+  }
+  
+  /* Firefox fallback */
+  @supports (scrollbar-width: thin) {
+    .channelchat-display {
+      scrollbar-width: thin;
+      scrollbar-color: transparent transparent;
+    }
+    .channelchat-display:hover {
+      scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    }
+  }
+  
+  /* Message Bubbles */
+  .chat-message {
+    padding: 6px 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    max-width: 80%;
+    word-wrap: break-word;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  
+  /* Sent Messages (align right) */
+  .sent {
+    background-color: #4C6A92;
+    color: #F0F6FC;
+    margin-left: auto;
+    border-bottom-right-radius: 2px;
     text-align: right;
-}
-
-.received {
-    text-align: left;
-}
-
-.channelchat-display {
-    max-width: 50%;
-}
+  }
+  
+  /* Received Messages (align left) */
+  .received {
+    background-color: #2D3A45;
+    border: 1px solid #4C5C68;
+    margin-right: auto;
+    border-bottom-left-radius: 2px;
+  }
+  
+  /* Sender Username (for received messages) */
+  .sender-username {
+    color: #58A6FF;
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  
+  img.sender-avatar {
+    vertical-align: middle;
+    padding-right: 2px;
+  }
+  
+  /* Input Area */
+  .channelchat-input {
+    padding: 15px;
+    background-color: #161B22;
+    border-top: 1px solid #30363D;
+    justify-items: center;
+  }
+  
+  .message-input {
+    position: relative;
+  }
+  
+  /* Textarea */
+  .message-input textarea {
+    width: 100%;
+    padding: 12px 50px 12px 15px;
+    border-radius: 6px;
+    border: 1px solid #2D3A45;
+    background-color: #2D3A45;
+    color: #F0F6FC;
+    resize: none;
+    font-size: 14px;
+  }
+  
+  /* Send Button */
+  .send-icon {
+    position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+  
+  .send-icon button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  
+  .send-icon img {
+    width: 24px;
+    height: 24px;
+    filter: brightness(1.1);
+    transition: filter 0.2s;
+  }
+  
+  .send-icon:hover img {
+    filter: brightness(1.8);
+  }
+  
+  .channelchat-input p,
+  .channelchat-history-display p {
+    color: #8B949E;
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  ::placeholder {
+    font-size: 0.9rem;
+  }
+  
