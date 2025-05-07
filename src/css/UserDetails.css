@@ -1,6 +1,5 @@
-
-  /* Modal overlay */
-  .modal-overlay {
+/* Modal overlay */
+.usermodal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -12,10 +11,10 @@
     justify-content: center;
     z-index: 1000;
     flex-direction: column;
-  }
-  
-  /* Modal container */
-  .modal-container {
+}
+
+/* Modal container */
+.usermodal-container {
     background-color: #1F2933;
     border: 2px solid #2D3A45;
     border-radius: 16px;
@@ -23,58 +22,45 @@
     width: 100%;
     max-width: 450px;
     color: #F0F6FC;
-  }
-  
-  .modal-header {
+}
+
+.usermodal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  
-  .modal-header h2 {
+}
+
+.usermodal-header h2 {
     font-size: 1.25rem;
     color: #F0F6FC;
     margin: 0;
     margin-block: 10px;
-  }
-  
-  .modal-header button {
+}
+
+.usermodal-header button {
     background: none;
     border: none;
     font-size: 1.5rem;
     color: #F0F6FC;
     cursor: pointer;
-  }
-  
-  .modal-header button:hover {
+}
+
+.usermodal-header button:hover {
     color: #FF7B72;
-  }
-  
-  .modal-body {
+}
+
+.usermodal-body {
     margin-top: 16px;
     font-size: 0.95rem;
     color: #C9D1D9;
-  }
-  
-  .modal-body p {
+}
+
+.usermodal-body p {
     margin-bottom: 8px;
-  }
+}
 
-  .channel-members-container {
-    display: flex;
-    flex-direction: column;
-    height: 95px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-  scrollbar-color: #888 #f0f0f0;
-  }
-
-  .channel-members p {
-    margin-block: 5px;
-  }
-  
-  /* OK button */
-  .ok-button {
+/* OK button */
+.ok-button {
     display: flex;
     justify-content: center;
     margin-top: 20px;
@@ -103,4 +89,3 @@
       padding: 24px 16px;
     }
   }
-  

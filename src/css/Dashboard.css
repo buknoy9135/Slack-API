@@ -11,6 +11,7 @@ html, body {
     color: #F0F6FC;
 }
 
+/* dashboard container */
 .dashboard-container {
     display: flex;
     padding-inline: 10%;
@@ -20,6 +21,7 @@ html, body {
     margin-inline: auto;
 }
 
+/* display area for user or channel chats */
 .chat-display-area {
     display: flex;
     flex-direction: column;
@@ -34,6 +36,7 @@ html, body {
     border-bottom-right-radius: 15px;
 }
 
+/* left navigation container */
 .navleft-container {
     display: flex;
     flex-direction: column;
@@ -103,6 +106,7 @@ html, body {
     height: 100vh;
 }
 
+/* images or avatars */
 img.group-avatar, img.person-avatar {
     align-items: center;
     align-content: center;

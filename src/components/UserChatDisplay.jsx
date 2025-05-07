@@ -5,6 +5,7 @@ import { API_URL } from "../constants/Constants";
 import "../css/UserChatDisplay.css";
 import send_icon from "../assets/send_message.png";
 import avatar_person from '../assets/avatar_person.png'
+import UserDetails from "./UserDetails";
 
 function UserChatDisplay(props) {
   const { selectedUser, message, setMessage } = props;
@@ -83,7 +84,7 @@ function UserChatDisplay(props) {
     <div className="UserChatDisplay-container">
 
       <div className="user-info">
-        <button>User Details</button>
+        <UserDetails selectedUser={selectedUser}/>
       </div>
       <div className="userchat-display">
         <div className="hide-scrollbar">

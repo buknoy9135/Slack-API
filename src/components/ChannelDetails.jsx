@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useData } from "../context/DataProvider";
 import { API_URL } from "../constants/Constants";
 import axios from "axios";
-import "../css/ChannelDetails.css"; // Optional, if you want to style the modal
+import "../css/ChannelDetails.css";
 
 function ChannelDetails({ selectedChannel, channelOwner, userList }) {
   const { userHeaders } = useData();
@@ -51,31 +51,44 @@ function ChannelDetails({ selectedChannel, channelOwner, userList }) {
             <div className="modal-body">
               {selectedChannel && channelData ? (
                 <div>
-                  <p>Channel Name: {channelData.name}</p>
-                  <p>Channel ID: {channelData.id}</p>
+                  <p>
+                    <strong>Channel Name</strong>: {channelData.name}
+                  </p>
+                  <p>
+                    <strong>🔹Channel ID</strong>: {channelData.id}
+                  </p>
+                  <p>
+                    <strong>Date Created</strong>:{" "}
+                    {new Date(channelData.created_at).toLocaleString()}
+                  </p>
                   {channelOwner && (
                     <p>
-                      Channel Owner username: {channelOwner.email.split("@")[0]}{" "}
+                      <strong>Channel Owner username</strong>:{" "}
+                      {channelOwner.email.split("@")[0]}{" "}
                     </p>
                   )}
-                  <p>Channel Owner ID: {channelData.owner_id}</p>
+                  <p>🔹Channel Owner ID: {channelData.owner_id}</p>
                   <p>Channel Members:</p>
-                  {channelData.channel_members.map((member) => {
-                    const matchedUser = userList.find(
-                      (user) => user.id === member.user_id
-                    );
 
-                    return (
-                      <div key={member.id}>
-                        <p>
-                          {matchedUser
-                            ? matchedUser.email.split("@")[0]
-                            : "Not found"}{" "}
-                          (ID: {member.user_id})
-                        </p>
-                      </div>
-                    );
-                  })}
+                  <div className="channel-members-container">
+                    {channelData.channel_members.map((member) => {
+                      const matchedUser = userList.find(
+                        (user) => user.id === member.user_id
+                      );
+
+                      return (
+                        <div key={member.id} className="channel-members">
+                          <p>
+                            🔹{" "}
+                            {matchedUser
+                              ? matchedUser.email.split("@")[0]
+                              : "Not found"}{" "}
+                            (ID: {member.user_id})
+                          </p>
+                        </div>
+                      );
+                    })}
+                  </div>
 
                   <div className="ok-button">
                     <button onClick={() => setShowModal(false)}>OK</button>

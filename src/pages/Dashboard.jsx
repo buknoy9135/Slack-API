@@ -88,7 +88,8 @@ function Dashboard(props) {
         </div>
         <div className="logout-button">
           <button onClick={onLogout}>⏻ Logout</button>
-        </div>
+        </div> 
+
       </nav>
 
       <div className="chat-display-area">

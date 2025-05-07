@@ -19,8 +19,8 @@
   }
 
   .user-info button {
-    background-color: #1F2A38; /* deep blue-gray */
-    color: #D6E7FF; /* soft blue */
+    background-color: #1F2A38;
+    color: #D6E7FF; 
     padding: 6px 12px;
     font-size: 1rem;
     margin-right: 10px;
