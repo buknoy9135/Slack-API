@@ -8,7 +8,7 @@ function UserDetails({ selectedUser }) {
     <>
       <div className="UserDetails-container">
         <div className="user-details-button">
-          <button onClick={() => setShowUserModal(true)}>User Details</button>
+          <button onClick={() => setShowUserModal(true)} data-testid="openUserModal">User Details</button>
         </div>
 
         {showUserModal && (
@@ -22,9 +22,9 @@ function UserDetails({ selectedUser }) {
                 {" "}
                 {selectedUser && (
                   <div>
-                    <p><strong>Username</strong>: {selectedUser.email.split("@")[0]}</p>
-                    <p><strong>Email</strong>: {selectedUser.email}</p>
-                    <p>
+                    <p data-testid="username"><strong>Username</strong>: {selectedUser.email.split("@")[0]}</p>
+                    <p data-testid="email"><strong>Email</strong>: {selectedUser.email}</p>
+                    <p data-testid="date-created">
                       <strong>Date Created</strong>:{" "}
                       {new Date(selectedUser.created_at).toLocaleString()}
                     </p>

@@ -69,7 +69,7 @@ function UserChatDisplay(props) {
       );
 
       if (response.status === 200) {
-        alert(`Message sent to ${selectedUser.email.split("@")[0]}!`);
+        // alert(`Message sent to ${selectedUser.email.split("@")[0]}!`);
         setMessage(""); //clear after successful send
       } else {
         alert("Failed to send message. Try again.");

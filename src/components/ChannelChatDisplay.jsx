@@ -77,7 +77,7 @@ function ChannelChatDisplay(props) {
       );
 
       if (response.status === 200) {
-        alert(`Message sent to ${selectedChannel.name}!`);
+        // alert(`Message sent to ${selectedChannel.name}!`);
         setMessageChannel(""); // Clear after successful send
       } else {
         alert("Failed to send message. Try again.");
@@ -133,13 +133,15 @@ function ChannelChatDisplay(props) {
                         height="16px"
                       />
                       <div className="timestamp-sent">
-                        {new Date(msg.created_at).toLocaleString(undefined, {
-                          month: "2-digit",
-                          day: "2-digit",
-                          hour: "2-digit",
-                          minute: "2-digit",
-                          hour12: true,
-                        }).replace(',','')}
+                        {new Date(msg.created_at)
+                          .toLocaleString(undefined, {
+                            month: "2-digit",
+                            day: "2-digit",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: true,
+                          })
+                          .replace(",", "")}
                       </div>
                     </>
                   ) : (
@@ -156,13 +158,15 @@ function ChannelChatDisplay(props) {
                       </span>
                       {msg.body}
                       <div className="timestamp-received">
-                        {new Date(msg.created_at).toLocaleString(undefined, {
-                          month: "2-digit",
-                          day: "2-digit",
-                          hour: "2-digit",
-                          minute: "2-digit",
-                          hour12: true,
-                        }).replace(',','')}
+                        {new Date(msg.created_at)
+                          .toLocaleString(undefined, {
+                            month: "2-digit",
+                            day: "2-digit",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: true,
+                          })
+                          .replace(",", "")}
                       </div>
                     </>
                   )}

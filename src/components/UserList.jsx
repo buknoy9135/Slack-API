@@ -35,10 +35,15 @@ function UserList(props) {
   };
 
   useEffect(() => {
-    if (userList.length === 0) {
+    getUsers();
+
+    const intervalId = setInterval(() => {
       getUsers();
-    }
-  });
+    }, 5000); // update getChannels every 5 seconds
+
+    // Clean up the interval when the component unmounts to avoid memory leaks
+    return () => clearInterval(intervalId);
+  }, [userHeaders, setUserList, setLoading]);
 
   //function to select user (clickable user list)
   const handleUserClick = (user) => {

@@ -79,7 +79,7 @@ function Signup() {
           <label>Password:</label>
           <input
             required
-            placeholder="password"
+            placeholder="minimum 6 characters"
             type="password"
             value={signupPassword}
             onChange={(e) => setSignupPassword(e.target.value)}
@@ -89,7 +89,7 @@ function Signup() {
           <label>Confirm Password:</label>
           <input
             required
-            placeholder="password"
+            placeholder="minimum 6 characters"
             type="password"
             value={confirmSignupPassword}
             onChange={(e) => setConfirmSignupPassword(e.target.value)}

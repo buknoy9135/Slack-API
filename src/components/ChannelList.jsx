@@ -35,16 +35,16 @@ function GetAllChannels(props) {
     }
   };
 
-  useEffect(
-    () => {
-      if (!Array.isArray(channelList) || channelList.length === 0) {
-        getChannels().then((channels) => {
-          console.log("Fetched channels:", channels);
-        });
-      }
-    }
-    // , [channelList]
-  );
+  useEffect(() => {
+    getChannels();
+
+    const intervalId = setInterval(() => {
+      getChannels();
+    }, 5000); // update getChannels every 5 seconds
+
+    // Clean up the interval when the component unmounts to avoid memory leaks
+    return () => clearInterval(intervalId);
+  }, [userHeaders, setChannelList, setLoadingChannel]);
 
   //   function to select channel and make it clickable
   const handleChannelClick = (channel) => {
@@ -59,7 +59,8 @@ function GetAllChannels(props) {
 
   return (
     <div className="GetAllChannels-container">
-      {channelList.sort((a, b) => {
+      {channelList
+        .sort((a, b) => {
           const channelA = a.name.toLowerCase();
           const channelB = b.name.toLowerCase();
           return channelA.localeCompare(channelB);
@@ -87,8 +88,7 @@ function GetAllChannels(props) {
             <span> {id} (channel ID) </span> */}
             </div>
           );
-        })
-        }
+        })}
     </div>
   );
 }
