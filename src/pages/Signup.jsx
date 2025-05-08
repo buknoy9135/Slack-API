@@ -45,8 +45,9 @@ function Signup() {
       }
     } catch (error) {
       if (error.response) {
-        console.error("Signup error:", error.response.data);
-        const errors = error.response.data.errors;
+        console.error("Signup error:", error.response.data.errors);
+        console.log("Full error response:", error.response.data);
+        const errors = error.response.data.errors?.full_messages;
 
         const message =
           Array.isArray(errors) && errors.length > 0

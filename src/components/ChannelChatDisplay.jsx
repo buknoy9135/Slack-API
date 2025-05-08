@@ -132,6 +132,15 @@ function ChannelChatDisplay(props) {
                         width="16px"
                         height="16px"
                       />
+                      <div className="timestamp-sent">
+                        {new Date(msg.created_at).toLocaleString(undefined, {
+                          month: "2-digit",
+                          day: "2-digit",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: true,
+                        }).replace(',','')}
+                      </div>
                     </>
                   ) : (
                     <>
@@ -146,6 +155,15 @@ function ChannelChatDisplay(props) {
                         {msg.sender?.email.split("@")[0] || "User"}:
                       </span>
                       {msg.body}
+                      <div className="timestamp-received">
+                        {new Date(msg.created_at).toLocaleString(undefined, {
+                          month: "2-digit",
+                          day: "2-digit",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: true,
+                        }).replace(',','')}
+                      </div>
                     </>
                   )}
                 </div>

@@ -119,6 +119,18 @@
     font-weight: bold;
     margin-right: 5px;
   }
+
+  .timestamp-sent {
+    color: #8B949E;
+    font-size: 10px;
+    text-align: right;
+  }
+
+  .timestamp-received {
+    color: #8B949E;
+    font-size: 10px;
+    text-align: left;
+  }
   
   /* Input Area */
   .userchat-input {

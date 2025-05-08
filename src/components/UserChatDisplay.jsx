@@ -4,7 +4,7 @@ import axios from "axios";
 import { API_URL } from "../constants/Constants";
 import "../css/UserChatDisplay.css";
 import send_icon from "../assets/send_message.png";
-import avatar_person from '../assets/avatar_person.png'
+import avatar_person from "../assets/avatar_person.png";
 import UserDetails from "./UserDetails";
 
 function UserChatDisplay(props) {
@@ -82,9 +82,8 @@ function UserChatDisplay(props) {
 
   return (
     <div className="UserChatDisplay-container">
-
       <div className="user-info">
-        <UserDetails selectedUser={selectedUser}/>
+        <UserDetails selectedUser={selectedUser} />
       </div>
       <div className="userchat-display">
         <div className="hide-scrollbar">
@@ -99,14 +98,48 @@ function UserChatDisplay(props) {
                 >
                   {msg.sender?.email === userHeaders.uid ? (
                     // Sent message: just show the message body
-                    <>{msg.body} <img className="receiver-avatar" src={avatar_person} alt="avatar person" width="16px" height="16px" /> </> 
-                  )  : (
+                    <>                      
+                      {msg.body}{" "}                      
+                      <img
+                        className="receiver-avatar"
+                        src={avatar_person}
+                        alt="avatar person"
+                        width="16px"
+                        height="16px"
+                      />{" "}
+                      <div className="timestamp-sent">
+                        {new Date(msg.created_at).toLocaleString(undefined, {
+                          month: "2-digit",
+                          day: "2-digit",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: true,
+                        }).replace(',','')}
+                      </div>
+                    </>
+                  ) : (
                     // Received message: show sender's username in blue, followed by the message body
                     <>
                       <span className="sender-username">
-                      <img className="sender-avatar" src={avatar_person} alt="avatar person" width="16px" height="16px" /> {msg.sender?.email.split("@")[0] || "User"}:
+                        <img
+                          className="sender-avatar"
+                          src={avatar_person}
+                          alt="avatar person"
+                          width="16px"
+                          height="16px"
+                        />{" "}
+                        {msg.sender?.email.split("@")[0] || "User"}:
                       </span>
                       {msg.body}
+                      <div className="timestamp-received">
+                        {new Date(msg.created_at).toLocaleString(undefined, {
+                          month: "2-digit",
+                          day: "2-digit",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: true,
+                        }).replace(',','')}
+                      </div>
                     </>
                   )}
                 </div>
