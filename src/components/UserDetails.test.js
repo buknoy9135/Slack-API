@@ -16,6 +16,18 @@ const mockUser = {
   updated_at: '2023-02-01T12:00:00Z',
 };
 
+test('check if email from mockUser is displayed', () => {
+  render(<UserDetails selectedUser={mockUser}/>);
+
+  expect(mockUser.email).toContain('testuser@example.com');
+})
+
+test('check if UTZ time from mockUser is displayed', () => {
+  render(<UserDetails selectedUser={mockUser}/>);
+
+  expect(mockUser.created_at).toEqual('2023-01-01T12:00:00Z');
+})
+
 test('displays username correctly in the model after button click', () => {
   render(<UserDetails selectedUser={mockUser} />);
 

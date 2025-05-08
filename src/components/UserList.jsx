@@ -68,10 +68,9 @@ function UserList(props) {
           const { id, email } = individual;
           const username = email.split("@")[0]; //remove @ onwards of email to get username
           return (
-            <div className="hide-scrollbar">
+            <div key={id} className="hide-scrollbar">
               <div
                 className="user-select-pointer"
-                key={id}
                 onClick={() => handleUserClick(individual)}
                 style={{
                   cursor: "pointer",

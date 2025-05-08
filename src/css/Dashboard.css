@@ -25,7 +25,7 @@ html, body {
 .chat-display-area {
     display: flex;
     flex-direction: column;
-    width: 70%;
+    width: 68%;
     height: calc(100vh - 20px);
     border: #2D3A45 solid 2px;
     border-left: none;
@@ -41,17 +41,29 @@ html, body {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    width: 30%;
+    width: 28%;
     height: calc(100vh - 20px);
     border: #2D3A45 solid 2px;
     margin: 10px 0px 10px 5px;
     background-color: #161B22;
     color: #F0F6FC;
     overflow: auto;
-    padding: 40px 20px 40px 50px;
+    padding: 30px 20px 40px 50px;
     font-size: 1rem;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
+}
+
+/* logo */
+
+.logo {
+    text-align: left;
+    padding-left: 12px;
+    padding-bottom: 10px;
+  }
+
+.logo img {
+   display: inline-block;
 }
 
 /* user & channel containers */
@@ -60,12 +72,17 @@ html, body {
     display: flex;
     flex-direction: column;
     overflow-y: hidden;
-    max-height: 60%;
+    max-height: 59%;
 }
 
-.user-list-container,
+.user-list-container {
+    padding: 4px 30px;
+    overflow-y: auto;
+    color: #58A6FF;
+}
+
 .channel-list-container {
-    padding: 10px 30px;
+    padding:4px 30px 4px;
     overflow-y: auto;
     color: #58A6FF;
 }
@@ -83,7 +100,7 @@ html, body {
 }
 
 .create-channel-container button {
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
 
 .show-user-button button:hover,

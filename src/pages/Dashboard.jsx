@@ -4,6 +4,7 @@ import UserList from "../components/UserList";
 import ChannelChatDisplay from "../components/ChannelChatDisplay";
 import ChannelList from "../components/ChannelList";
 import CreateChannel from "../components/CreateChannel.jsx";
+import logo from '../assets/disowned.png'
 import "../css/Dashboard.css";
 
 
@@ -37,6 +38,9 @@ function Dashboard(props) {
     <div className="dashboard-container">
       
       <nav className="navleft-container">
+        <div className="logo">
+          <img src={logo} alt="logo" width="220px" />
+        </div>
         {/* <h2>Slack Off App</h2> */}
         {loading && <p>Populating users, please wait...</p>}
 

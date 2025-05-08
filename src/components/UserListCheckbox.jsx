@@ -8,7 +8,7 @@ function UserListCheckbox(props) {
   }
 
   return (
-    <div className="user-list-scrollbox">
+    <div className="user-list-scrollbox hide-scrollbar" >
       {userList
         .filter((user) => user.id >= 194)
         .sort((a, b) => a.email.localeCompare(b.email))

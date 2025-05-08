@@ -22,7 +22,7 @@ function AddMember(props) {
   const filteredUserList = userList.filter(
     (user) => !existingMemberUserIds.includes(user.id)    
   )
-  console.log(filteredUserList) //just for checking in console
+  // console.log(filteredUserList) //just for checking in console
   const handleAddMember = async (e) => {
     e.preventDefault();
 

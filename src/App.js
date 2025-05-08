@@ -18,10 +18,6 @@ function App() {
     setIsAuthenticated(false);
   }
 
-  // const handleSignup = () => {
-  //   setIsAuthenticated(false);
-  // }
-
   return (
     <DataProvider>
       <BrowserRouter>
@@ -39,18 +35,6 @@ function App() {
             )
           }  
           />
-
-          {/* <Route
-            path="/message"
-            element={
-              isAuthenticated ? (
-                <Message />
-              ) : (
-                <Navigate to="/login" />
-              )
-            }
-          /> */}
-
 
           {/* Navigate - forces the browser to attach this path to the URL */}
           <Route path="*" element={<Navigate to="/login" />} />
