@@ -2,12 +2,20 @@ import React, { useState } from "react";
 import axios from "axios";
 import { API_URL } from "../constants/Constants";
 import { useNavigate } from "react-router-dom";
+import Prompt from "../parts/Prompt";
 import "../css/Signup.css";
 
 function Signup() {
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
   const [confirmSignupPassword, setConfirmSignupPassword] = useState("");
+
+  //prompt modal
+  const [promptOpen, setPromptOpen] = useState(false);
+  const [promptHeading, setPromptHeading] = useState("");
+  const [promptMessage, setPromptMessage] = useState("");
+
+  const handlePromptClose = () => setPromptOpen(false);
 
   const navigate = useNavigate();
 
@@ -22,12 +30,16 @@ function Signup() {
       };
 
       if (signupPassword !== confirmSignupPassword) {
-        alert("Passwords not matching. Try again");
+        setPromptOpen(true);
+        setPromptHeading("Wrong password:");
+        setPromptMessage("Passwords not matching. Try again");
         return;
       }
 
       if (!signupEmail || !signupPassword || !confirmSignupPassword) {
-        alert("All fields are required.");
+        setPromptOpen(true);
+        setPromptHeading("Missing information:");
+        setPromptMessage("All fields are required.");
         return;
       }
 
@@ -37,7 +49,11 @@ function Signup() {
       console.log(data);
 
       if (data.data) {
-        alert(`Email: ${signupEmail} has been created successfully!`);
+        setPromptOpen(true);
+        setPromptHeading("Success!");
+        setPromptMessage(
+          `Email: ${signupEmail} has been created successfully!`
+        );
         setSignupEmail("");
         setSignupPassword("");
         setConfirmSignupPassword("");
@@ -54,9 +70,13 @@ function Signup() {
             ? errors[0]
             : "Signup failed.";
 
-        alert(`Signup failed: ${message}`);
+        setPromptOpen(true);
+        setPromptHeading("Sign-up failed:");
+        setPromptMessage(`${message}`);
       } else {
-        alert("Something went wrong. Please try again.");
+        setPromptOpen(true);
+        setPromptHeading("Error:");
+        setPromptMessage("Something went wrong. Please try again.");
       }
     }
   };
@@ -68,7 +88,6 @@ function Signup() {
         <div className="email-input">
           <label>Email:</label>
           <input
-            required
             placeholder="user@email.com"
             type="email"
             value={signupEmail}
@@ -78,7 +97,6 @@ function Signup() {
         <div className="password-input">
           <label>Password:</label>
           <input
-            required
             placeholder="minimum 6 characters"
             type="password"
             value={signupPassword}
@@ -88,13 +106,21 @@ function Signup() {
         <div className="confirm-password-input">
           <label>Confirm Password:</label>
           <input
-            required
             placeholder="minimum 6 characters"
             type="password"
             value={confirmSignupPassword}
             onChange={(e) => setConfirmSignupPassword(e.target.value)}
           />
         </div>
+
+        {promptOpen && (
+          <Prompt
+            promptHeading={promptHeading}
+            promptMessage={promptMessage}
+            onClose={handlePromptClose}
+          />
+        )}
+
         <button type="submit">Sign Up</button>
         <div className="login-prompt">
           Already have an account?

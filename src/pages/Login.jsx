@@ -3,12 +3,20 @@ import axios from "axios";
 import { API_URL } from "../constants/Constants";
 import { useNavigate } from "react-router-dom";
 import { useData } from "../context/DataProvider";
+import Prompt from "../parts/Prompt";
 import "../css/Login.css";
 
 function Login(props) {
   const { onLogin } = props;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  //prompt modal
+  const [promptOpen, setPromptOpen] = useState(false);
+  const [promptHeading, setPromptHeading] = useState("");
+  const [promptMessage, setPromptMessage] = useState("");
+
+  const handlePromptClose = () => setPromptOpen(false);
 
   //automatically changing the path in the url
   const navigate = useNavigate();
@@ -36,6 +44,7 @@ function Login(props) {
         const uid = headers["uid"];
 
         console.log(data);
+        console.log(data.data.id); //for profile details
         console.log(accessToken, expiry, client, uid);
 
         //keep the headers value in our context - these can now be used in other pages/components
@@ -46,7 +55,10 @@ function Login(props) {
       }
     } catch (error) {
       if (error) {
-        return alert("Invalid credentials");
+        setPromptOpen(true);
+        setPromptHeading("Wrong Credentials:");
+        setPromptMessage("Invalid username or password.");
+        return;
       }
     }
   };
@@ -60,6 +72,7 @@ function Login(props) {
           <input
             type="email"
             value={email}
+            required
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
@@ -68,11 +81,20 @@ function Login(props) {
           <input
             type="password"
             value={password}
+            required
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <button type="submit">Login</button>
       </form>
+
+      {promptOpen && (
+        <Prompt
+          promptHeading={promptHeading}
+          promptMessage={promptMessage}
+          onClose={handlePromptClose}
+        />
+      )}
 
       {/* Sign up page */}
       <div className="signup-prompt">

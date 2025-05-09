@@ -3,6 +3,7 @@ import { useData } from "../context/DataProvider";
 import { API_URL } from "../constants/Constants";
 import axios from "axios";
 import UserListCheckbox from "./UserListCheckbox";
+import Prompt from "../parts/Prompt";
 import "../css/CreateChannel.css";
 
 function CreateChannel(props) {
@@ -13,6 +14,13 @@ function CreateChannel(props) {
   const [selectedUserIds, setSelectedUserIds] = useState([]);
   const [showModalChannel, setShowModalChannel] = useState(false);
   const [createdChannel, setCreatedChannel] = useState(null);
+
+  //prompt modal
+  const [promptOpen, setPromptOpen] = useState(false);
+  const [promptHeading, setPromptHeading] = useState("");
+  const [promptMessage, setPromptMessage] = useState("");
+
+  const handlePromptClose = () => setPromptOpen(false);
 
   //toggle function to add user ID if not selected, and remove if already is
   const handleToggleUser = (id) => {
@@ -25,10 +33,25 @@ function CreateChannel(props) {
   const handleAddChannel = async (e) => {
     e.preventDefault();
 
-    if (selectedUserIds.length === 0) {
-      alert("Please select atleast one member to create the channel");
+    if (!channelName) {
+      setPromptOpen(true);
+      setPromptHeading("Missing information:");
+      setPromptMessage(
+        "Please set channel name."
+      );
       return;
     }
+
+    if (selectedUserIds.length === 0) {
+      setPromptOpen(true);
+      setPromptHeading("Missing information:");
+      setPromptMessage(
+        "Please select atleast (1) member to create the channel."
+      );
+      return;
+    }
+
+    
 
     const requestBody = {
       name: channelName,
@@ -50,7 +73,9 @@ function CreateChannel(props) {
       console.log(data);
 
       if (data.data) {
-        alert(`Successfully created a channel: ${channelName}`);
+        setPromptOpen(true);
+        setPromptHeading("Success!");
+        setPromptMessage(`Successfully created a channel: ${channelName}`);
         console.log(createdChannel);
         setCreatedChannel(data.data);
         setShowModalChannel(false);
@@ -58,7 +83,9 @@ function CreateChannel(props) {
         setSelectedUserIds([]);
       }
     } catch (error) {
-      alert("Cannot create a channel");
+      setPromptOpen(true);
+      setPromptHeading("Failed:");
+      setPromptMessage("Cannot create a channel");
     }
   };
 
@@ -79,7 +106,7 @@ function CreateChannel(props) {
               <h4>Channel Name:</h4>
               <input
                 type="text"
-                required
+                // required
                 placeholder="max 15 characters only"
                 maxLength={15}
                 value={channelName}
@@ -111,6 +138,14 @@ function CreateChannel(props) {
             </div>
           </form>
         </div>
+      )}
+
+      {promptOpen && (
+        <Prompt
+          promptHeading={promptHeading}
+          promptMessage={promptMessage}
+          onClose={handlePromptClose}
+        />
       )}
     </div>
   );

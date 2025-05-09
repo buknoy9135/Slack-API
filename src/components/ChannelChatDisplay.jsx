@@ -5,6 +5,7 @@ import { API_URL } from "../constants/Constants";
 import "../css/ChannelChatDisplay.css";
 import ChannelDetails from "./ChannelDetails";
 import AddMember from "./AddMember";
+import Prompt from "../parts/Prompt";
 import send_icon from "../assets/send_message.png";
 import groupavatar from "../assets/group.png";
 import avatar_person from "../assets/avatar_person.png";
@@ -22,6 +23,13 @@ function ChannelChatDisplay(props) {
 
   const { userHeaders } = useData();
   const [chatChannelMessages, setChatChannelMessages] = useState([]);
+
+  //prompt modal
+  const [promptOpen, setPromptOpen] = useState(false);
+  const [promptHeading, setPromptHeading] = useState("");
+  const [promptMessage, setPromptMessage] = useState("");
+
+  const handlePromptClose = () => setPromptOpen(false);
 
   // Fetch channel messages
   useEffect(() => {
@@ -43,7 +51,9 @@ function ChannelChatDisplay(props) {
         }
       } catch (error) {
         console.error("Failed to fetch messages:", error);
-        alert("Could not load messages.");
+        setPromptOpen(true);
+        setPromptHeading("Failed:");
+        setPromptMessage("Could not load messages.");
       }
     };
 
@@ -55,7 +65,9 @@ function ChannelChatDisplay(props) {
   // Send channel message
   const handleChannelMessage = async () => {
     if (!messageChannel.trim()) {
-      alert("Please type a message before sending.");
+      setPromptOpen(true);
+      setPromptHeading("Failed:");
+      setPromptMessage("Please type a message before sending.");
       return;
     }
 
@@ -80,11 +92,15 @@ function ChannelChatDisplay(props) {
         // alert(`Message sent to ${selectedChannel.name}!`);
         setMessageChannel(""); // Clear after successful send
       } else {
-        alert("Failed to send message. Try again.");
+        setPromptOpen(true);
+        setPromptHeading("Error:");
+        setPromptMessage("Failed to send message. Try again.");
       }
     } catch (error) {
       console.error(error);
-      alert("An error occurred while sending the message.");
+      setPromptOpen(true);
+      setPromptHeading("Failed:");
+      setPromptMessage("An error occurred while sending the message.");
     }
   };
 
@@ -209,6 +225,14 @@ function ChannelChatDisplay(props) {
           <p>Select a channel to message</p>
         )}
       </div>
+
+      {promptOpen && (
+        <Prompt
+          promptHeading={promptHeading}
+          promptMessage={promptMessage}
+          onClose={handlePromptClose}
+        />
+      )}
     </div>
   );
 }

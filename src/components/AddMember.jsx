@@ -3,7 +3,8 @@ import UserListCheckbox from "./UserListCheckbox";
 import { useData } from "../context/DataProvider";
 import { API_URL } from "../constants/Constants";
 import axios from "axios";
-import '../css/AddMember.css'
+import Prompt from "../parts/Prompt";
+import "../css/AddMember.css";
 
 function AddMember(props) {
   const { userList, selectedChannel, existingMemberUserIds } = props;
@@ -11,6 +12,13 @@ function AddMember(props) {
   const { userHeaders } = useData();
   const [selectedUserIds, setSelectedUserIds] = useState([]);
   const [showModalAddMember, setShowModalAddMember] = useState(false);
+
+  //prompt modal
+  const [promptOpen, setPromptOpen] = useState(false);
+  const [promptHeading, setPromptHeading] = useState("");
+  const [promptMessage, setPromptMessage] = useState("");
+
+  const handlePromptClose = () => setPromptOpen(false);
 
   //toggle function to add user ID if not selected, and remove if already is
   const handleToggleUser = (id) => {
@@ -20,14 +28,18 @@ function AddMember(props) {
   };
 
   const filteredUserList = userList.filter(
-    (user) => !existingMemberUserIds.includes(user.id)    
-  )
+    (user) => !existingMemberUserIds.includes(user.id)
+  );
   // console.log(filteredUserList) //just for checking in console
   const handleAddMember = async (e) => {
     e.preventDefault();
 
     if (selectedUserIds.length === 0) {
-      alert("Please select atleast one member to add into the channel");
+      setPromptOpen(true);
+      setPromptHeading("Required:");
+      setPromptMessage(
+        "Please select atleast one member to add into the channel"
+      );
       return;
     }
 
@@ -37,7 +49,6 @@ function AddMember(props) {
 
     try {
       for (const userId of selectedUserIds) {
-        
         const requestBody = {
           id: Number(selectedChannel.id),
           member_id: userId,
@@ -52,50 +63,63 @@ function AddMember(props) {
         console.log(`Added user ID ${userId}:`, response.data);
       }
 
-      alert(`Successfully added ${selectedUserIds.length} member(s)`);
+      setPromptOpen(true);
+      setPromptHeading("Success!");
+      setPromptMessage(
+        `Successfully added ${selectedUserIds.length} member(s).`
+      );
       setShowModalAddMember(false);
       setSelectedUserIds([]);
     } catch (error) {
       console.error("Failed to add member:", error);
-      alert("Cannot add member to channel");
+      setPromptOpen(true);
+      setPromptHeading("Failed:");
+      setPromptMessage("Cannot add member to channel");
     }
   };
 
   return (
     <>
-  <div className="AddMember-container">
-    <button
-      className="addmember"
-      onClick={() => setShowModalAddMember(true)}
-    >
-      Add Member
-    </button>
-  </div>
-
-  {showModalAddMember && (
-    <div className="addmember-modal-backdrop">
-      <form onSubmit={handleAddMember} className="addmember-modal-content">
-        <h4>Add Member</h4>
-        <UserListCheckbox
-          userList={filteredUserList}
-          selectedUserIds={selectedUserIds}
-          onToggle={handleToggleUser}
-        />
-        <button type="submit">Add Member</button>
+      <div className="AddMember-container">
         <button
-          type="button"
-          onClick={() => {
-            setShowModalAddMember(false);
-            setSelectedUserIds([]);
-          }}
+          className="addmember"
+          onClick={() => setShowModalAddMember(true)}
         >
-          Cancel
+          Add Member
         </button>
-      </form>
-    </div>
-  )}
-</>
+      </div>
 
+      {showModalAddMember && (
+        <div className="addmember-modal-backdrop">
+          <form onSubmit={handleAddMember} className="addmember-modal-content">
+            <h4>Add Member</h4>
+            <UserListCheckbox
+              userList={filteredUserList}
+              selectedUserIds={selectedUserIds}
+              onToggle={handleToggleUser}
+            />
+            <button type="submit">Add Member</button>
+            <button
+              type="button"
+              onClick={() => {
+                setShowModalAddMember(false);
+                setSelectedUserIds([]);
+              }}
+            >
+              Cancel
+            </button>
+          </form>
+        </div>
+      )}
+
+      {promptOpen && (
+        <Prompt
+          promptHeading={promptHeading}
+          promptMessage={promptMessage}
+          onClose={handlePromptClose}
+        />
+      )}
+    </>
   );
 }
 

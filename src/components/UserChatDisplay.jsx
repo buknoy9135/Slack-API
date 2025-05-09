@@ -6,11 +6,19 @@ import "../css/UserChatDisplay.css";
 import send_icon from "../assets/send_message.png";
 import avatar_person from "../assets/avatar_person.png";
 import UserDetails from "./UserDetails";
+import Prompt from "../parts/Prompt";
 
 function UserChatDisplay(props) {
   const { selectedUser, message, setMessage } = props;
   const { userHeaders } = useData();
   const [chatUserMessages, setChatUserMessages] = useState([]);
+
+  //prompt modal
+    const [promptOpen, setPromptOpen] = useState(false);
+    const [promptHeading, setPromptHeading] = useState("");
+    const [promptMessage, setPromptMessage] = useState("");
+  
+    const handlePromptClose = () => setPromptOpen(false);
 
   //Fetch user messages function
   useEffect(() => {
@@ -32,7 +40,9 @@ function UserChatDisplay(props) {
         }
       } catch (error) {
         console.error("Failed to fetch messages:", error);
-        alert("Could not load messages.");
+        setPromptOpen(true);
+        setPromptHeading("Failed:");
+        setPromptMessage("Could not load messages");
       }
     };
 
@@ -47,7 +57,9 @@ function UserChatDisplay(props) {
   //function to send message
   const handleMessage = async () => {
     if (!message.trim()) {
-      alert("Please type a message before sending.");
+      setPromptOpen(true);
+        setPromptHeading("Failed:");
+        setPromptMessage("Please type a message before sending.");
       return;
     }
 
@@ -72,11 +84,15 @@ function UserChatDisplay(props) {
         // alert(`Message sent to ${selectedUser.email.split("@")[0]}!`);
         setMessage(""); //clear after successful send
       } else {
-        alert("Failed to send message. Try again.");
+        setPromptOpen(true);
+        setPromptHeading("Error:");
+        setPromptMessage("Failed to send message. Try again.");        
       }
     } catch (error) {
       console.error(error);
-      alert("An error occurred while sending the message.");
+      setPromptOpen(true);
+        setPromptHeading("Failed:");
+        setPromptMessage("An error occurred while sending the message.");  
     }
   };
 
@@ -183,6 +199,13 @@ function UserChatDisplay(props) {
           <p>Select a user to message</p>
         )}
       </div>
+      {promptOpen && (
+        <Prompt
+          promptHeading={promptHeading}
+          promptMessage={promptMessage}
+          onClose={handlePromptClose}
+        />
+      )}
     </div>
   );
 }
