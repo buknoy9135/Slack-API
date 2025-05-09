@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useData } from "../context/DataProvider";
 import axios from "axios";
 import { API_URL } from "../constants/Constants";
+import '../css/ChannelList.css'
 import avatar_group from "../assets/group.png";
 
 function GetAllChannels(props) {
@@ -9,6 +10,7 @@ function GetAllChannels(props) {
     channelList,
     setChannelList,
     setLoadingChannel,
+    selectedChannel,
     setSelectedChannel,
     setMessageChannel,
     setSelectedUser,
@@ -69,7 +71,7 @@ function GetAllChannels(props) {
           const { id, name } = channel;
           return (
             <div
-              className="channel-select-pointer"
+            className={`channel-select-pointer ${selectedChannel?.id === id ? "selected" : ""}`}
               key={id}
               onClick={() => handleChannelClick(channel)}
               style={{ cursor: "pointer", padding: "0.2rem" }}

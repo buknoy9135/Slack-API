@@ -1,0 +1,3 @@
+.user-select-pointer:hover, .user-select-pointer.selected {
+  color:  #BA55D3;
+}

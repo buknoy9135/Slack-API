@@ -58,6 +58,7 @@ function Dashboard(props) {
               <UserList
                 userList={userList}
                 setUserList={setUserList}
+                selectedUser={selectedUser}
                 setSelectedUser={setSelectedUser}
                 setMessage={setMessage}
                 setLoading={setLoading}
@@ -82,6 +83,7 @@ function Dashboard(props) {
                 channelList={channelList}
                 setChannelList={setChannelList}
                 setLoadingChannel={setLoadingChannel}
+                selectedChannel={selectedChannel}
                 setSelectedChannel={setSelectedChannel}
                 setMessageChannel={setMessageChannel}
                 setSelectedUser={setSelectedUser}

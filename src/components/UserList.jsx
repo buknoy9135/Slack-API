@@ -3,11 +3,13 @@ import { useData } from "../context/DataProvider";
 import axios from "axios";
 import { API_URL } from "../constants/Constants";
 import avatar_person from "../assets/avatar_person.png";
+import '../css/UserList.css'
 
 function UserList(props) {
   const {
     userList,
     setUserList,
+    selectedUser,
     setSelectedUser,
     setMessage,
     setLoading,
@@ -70,7 +72,7 @@ function UserList(props) {
           return (
             <div key={id} className="hide-scrollbar">
               <div
-                className="user-select-pointer"
+                className={`user-select-pointer ${selectedUser?.id === id ? "selected" : ""}`}
                 onClick={() => handleUserClick(individual)}
                 style={{
                   cursor: "pointer",
